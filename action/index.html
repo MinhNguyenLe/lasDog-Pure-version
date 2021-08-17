@@ -10,14 +10,14 @@
         <h1 class="big-text">Learn Deep</h1>
       </div>
       <section class="flex row feature full-width center">
-        <button class="btn btn-counter column flex center mid">
+        <button class="btn btn-countdown column flex center mid non-action">
           <img
             src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/setting.svg"
             alt=""
           />
           Countdown
         </button>
-        <button class="btn btn-todo flex column center mid">
+        <button class="btn btn-todo flex column center mid action">
           <img
             src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/lookUp.svg"
             alt=""
@@ -25,6 +25,10 @@
           To do list
         </button>
       </section>
+      <div class="flex column mid full-width">
+        <input type="text" placeholder="Work list" id="todo" />
+        <div id="list"></div>
+      </div>
     </div>
     <script src="/action/index.js"></script>
   </body>

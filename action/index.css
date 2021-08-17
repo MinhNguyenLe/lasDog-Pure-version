@@ -4,6 +4,14 @@ h1 {
 body {
   margin: 0;
 }
+input {
+  border: none;
+  font-size: 14px;
+  outline: none;
+  padding: 6px 12px;
+  border-bottom: 1px solid #d6d6d6;
+  margin: 16px 0;
+}
 .flex {
   display: flex;
 }
@@ -52,13 +60,18 @@ body {
 }
 .btn-todo {
   padding: 6px 0px;
-  background: #d3c438;
+}
+.btn-countdown {
+  padding: 6px 0px;
+}
+.action {
+  background: #1da1f2;
   color: white;
 }
-.btn-counter {
-  background: #17bf17;
-  padding: 6px 0px;
-  color: white;
+.non-action {
+  background: white;
+  color: #1da1f2;
+  border-bottom: 1px solid #1da1f2;
 }
 .big-text {
   margin: 10px 0;
