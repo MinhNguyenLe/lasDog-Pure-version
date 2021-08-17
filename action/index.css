@@ -1,3 +1,70 @@
-.a {
-  color: red;
+h1 {
+  margin: 0;
+}
+body {
+  margin: 0;
+}
+.flex {
+  display: flex;
+}
+.column {
+  flex-direction: column;
+}
+.row {
+  flex-direction: row;
+}
+.mid {
+  align-items: center;
+}
+.center {
+  justify-content: center;
+}
+.first {
+  justify-content: flex-start;
+}
+.finally {
+  justify-content: flex-end;
+}
+.above {
+  align-items: flex-start;
+}
+.under {
+  align-items: flex-end;
+}
+.between {
+  justify-content: space-between;
+}
+.cover {
+  width: 300px;
+}
+.feature {
+  box-shadow: inset 0px -1px 0px rgb(0 0 0 / 10%);
+}
+.full-width {
+  width: 100%;
+}
+.btn {
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  width: 150px;
+}
+.btn-todo {
+  padding: 6px 0px;
+  background: #d3c438;
+  color: white;
+}
+.btn-counter {
+  background: #17bf17;
+  padding: 6px 0px;
+  color: white;
+}
+.big-text {
+  margin: 10px 0;
+  color: #1da1f2;
+}
+.brand {
+  background-color: #f8f8f8;
+  box-shadow: inset 0px -1px 0px rgb(0 0 0 / 10%);
 }
