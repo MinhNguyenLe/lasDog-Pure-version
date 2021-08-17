@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Learn deep Extension",
+  "version": "1.0.0",
+  "description": "the best extension for learning",
+  "icons": {
+    "16": "/images/svg-icon16.png",
+    "48": "/images/svg-icon16.png",
+    "128": "/images/svg-icon16.png"
+  },
+  "action": {
+    "default_icon": "/images/svg-icon16.png",
+    "default_popup": "index.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Q",
+        "mac": "MacCtrl+Q"
+      },
+      "description": "Opens index.html"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"],
+      "css": ["index.css"],
+      "js": ["index.js"]
+    }
+  ]
+}
