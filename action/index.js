@@ -1,24 +1,32 @@
-let itemTodo = `<div class="full-width flex row center mid">
-          <input id="" type="checkbox" />
-          <label for="" id="">aaa</label>
-        </div>`;
 let countId = 0;
 
 const countdown = document.querySelector(".btn-countdown");
+
 countdown.addEventListener("click", () => {
-  console.log(1);
+  document.getElementById("table-todo").style.display = "none";
+
+  todo.classList.remove("action");
+  countdown.classList.add("action");
 });
 
-const todo = document.getElementById("todo");
+const todo = document.querySelector(".btn-todo");
+
+todo.addEventListener("click", () => {
+  document.getElementById("table-todo").style.display = "flex";
+
+  countdown.classList.remove("action");
+  todo.classList.add("action");
+});
+
+const todoInput = document.getElementById("todo");
 const list = document.getElementById("list");
-todo.addEventListener("keydown", (e) => {
+todoInput.addEventListener("keydown", (e) => {
   if (e.code == "Enter") {
-    list.innerHTML += `<div class="full-width flex row center mid">
+    list.innerHTML += `<div class="list-todo full-width flex row mid">
     <input id="${countId}" type="checkbox" />
-    <label for="${countId}" id="todo-${countId}">aaa</label>
+    <label class="todo-label" for="${countId}" id="todo-${countId}">${todoInput.value}</label>
         </div>`;
     countId++;
-    todo.value = "";
-    console.log(countId);
+    todoInput.value = "";
   }
 });

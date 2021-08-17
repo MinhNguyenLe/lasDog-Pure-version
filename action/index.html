@@ -17,7 +17,7 @@
           />
           Countdown
         </button>
-        <button class="btn btn-todo flex column center mid action">
+        <button class="btn btn-todo flex column center mid non-action action">
           <img
             src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/lookUp.svg"
             alt=""
@@ -25,9 +25,9 @@
           To do list
         </button>
       </section>
-      <div class="flex column mid full-width">
+      <div id="table-todo" class="flex column mid full-width">
         <input type="text" placeholder="Work list" id="todo" />
-        <div id="list"></div>
+        <div id="list" class="full-width flex column above"></div>
       </div>
     </div>
     <script src="/action/index.js"></script>

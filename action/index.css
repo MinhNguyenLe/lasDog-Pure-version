@@ -51,6 +51,9 @@ input {
 .full-width {
   width: 100%;
 }
+.hide {
+  display: none;
+}
 .btn {
   cursor: pointer;
   border: none;
@@ -65,8 +68,8 @@ input {
   padding: 6px 0px;
 }
 .action {
-  background: #1da1f2;
-  color: white;
+  background: #1da1f2 !important;
+  color: white !important;
 }
 .non-action {
   background: white;
@@ -80,4 +83,11 @@ input {
 .brand {
   background-color: #f8f8f8;
   box-shadow: inset 0px -1px 0px rgb(0 0 0 / 10%);
+}
+.todo-label {
+  margin-left: 4px;
+}
+.list-todo {
+  padding: 0 20px;
+  word-wrap: break-word;
 }
