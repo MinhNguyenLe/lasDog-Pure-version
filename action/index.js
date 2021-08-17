@@ -20,6 +20,12 @@ chrome.storage.local.get(["listTodo"], function (result) {
       list.innerHTML += l;
     });
   }
+  document.querySelectorAll(".list-todo").forEach((t) => {
+    t.addEventListener("contextmenu", () => {
+      t.remove();
+      return false;
+    });
+  });
 });
 
 countdown.addEventListener("click", () => {
