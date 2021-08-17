@@ -87,7 +87,25 @@ input {
 .todo-label {
   margin-left: 4px;
 }
+.countdown-label {
+  margin-right: 4px;
+  font-size: 14px;
+  color: rgb(104, 104, 104);
+}
 .list-todo {
   padding: 0 20px;
   word-wrap: break-word;
+}
+.mini-input {
+  width: 24px;
+}
+.around {
+  justify-content: space-around;
+}
+.start-countdown {
+  background-color: white;
+  width: auto;
+  border: 1px solid #1da1f2;
+  padding: 6px 10px;
+  border-radius: 6px;
 }

@@ -27,5 +27,6 @@
       "css": ["/contentScript/index.css"],
       "js": ["/contentScript/index.js"]
     }
-  ]
+  ],
+  "permissions": ["storage"]
 }

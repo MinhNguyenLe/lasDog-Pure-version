@@ -10,14 +10,16 @@
         <h1 class="big-text">Learn Deep</h1>
       </div>
       <section class="flex row feature full-width center">
-        <button class="btn btn-countdown column flex center mid non-action">
+        <button
+          class="btn btn-countdown column flex center mid non-action action"
+        >
           <img
             src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/setting.svg"
             alt=""
           />
           Countdown
         </button>
-        <button class="btn btn-todo flex column center mid non-action action">
+        <button class="btn btn-todo flex column center mid non-action">
           <img
             src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/lookUp.svg"
             alt=""
@@ -25,9 +27,39 @@
           To do list
         </button>
       </section>
-      <div id="table-todo" class="flex column mid full-width">
+      <div id="table-todo" class="hide flex column mid full-width">
         <input type="text" placeholder="Work list" id="todo" />
         <div id="list" class="full-width flex column above"></div>
+      </div>
+      <div id="table-countdown" class="flex column center mid full-width">
+        <div class="flex row around mid full-width">
+          <div class="flex row center mid">
+            <label class="countdown-label" for="minute">Minutes : </label>
+            <input
+              id="minute"
+              maxlength="3"
+              type="text"
+              placeholder="00"
+              class="mini-input"
+            />
+          </div>
+          <div class="flex row center mid">
+            <label class="countdown-label" for="second">Seconds : </label>
+            <input
+              id="second"
+              maxlength="2"
+              type="text"
+              placeholder="00"
+              class="mini-input"
+            />
+          </div>
+          <button class="btn start-countdown">
+            <img
+              src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/game.svg"
+              alt=""
+            />
+          </button>
+        </div>
       </div>
     </div>
     <script src="/action/index.js"></script>
