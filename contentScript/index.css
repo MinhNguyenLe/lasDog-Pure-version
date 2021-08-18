@@ -86,3 +86,9 @@
   margin-right: 10px;
   cursor: pointer;
 }
+.n-width {
+  max-width: 1024px;
+}
+.list-todo {
+  margin: 24px 0;
+}

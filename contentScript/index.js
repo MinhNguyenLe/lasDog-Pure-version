@@ -1,4 +1,6 @@
 let isBlock = false;
+let newTodoList = [];
+
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
 function block(items) {
@@ -6,21 +8,29 @@ function block(items) {
   if (isBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
       <h1 class="title-new">You still work list to do. Fighting!!!</h1>
-      <div id="list" class="full-width flex column above"></div>
+      <div id="list" class="n-width flex column above"></div>
     </div>`;
 
+    // random background-gradient
     const newBody = document.querySelector(".new-body");
     newBody.classList.add(`linear${linearRandom}`);
+
+    // add work list from extension
     const list = document.getElementById("list");
     items.forEach((item) => {
-      list.innerHTML += item.new;
+      if (!item.checked) {
+        list.innerHTML += item.new;
+      }
     });
+
+    const allInput = document.querySelectorAll(".input-child");
+    allInput.forEach((item) => item.remove());
   }
 }
 
 // communicate with background page
 chrome.runtime.sendMessage({ type: "matchParent" }, (response) => {
-  console.log(response.state.listTodo);
+  newTodoList = response.state.listTodo;
   if (!response.state.listTodo.length) {
     if (isBlock) {
       isBlock = false;

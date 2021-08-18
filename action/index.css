@@ -87,6 +87,7 @@ input {
 .todo-label {
   margin-left: 8px;
   max-width: 240px;
+  cursor: pointer;
 }
 .countdown-label {
   margin-right: 4px;
@@ -120,4 +121,5 @@ input {
 .input-child {
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
