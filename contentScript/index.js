@@ -25,6 +25,14 @@ function block(items) {
 
     const allInput = document.querySelectorAll(".input-child");
     allInput.forEach((item) => item.remove());
+
+    const listTodo = document.querySelectorAll(".list-todo");
+    let count = 1;
+    listTodo.forEach((item) => {
+      item.innerHTML =
+        `<span class="input-child">${count}.</span>` + item.innerHTML;
+      count++;
+    });
   }
 }
 
