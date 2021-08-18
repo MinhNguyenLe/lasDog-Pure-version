@@ -109,3 +109,10 @@ input {
   padding: 6px 10px;
   border-radius: 6px;
 }
+.btn-start-todo {
+  background-color: white;
+  border: 1px solid #1da1f2;
+  border-radius: 4px;
+  padding: 8px 0;
+  color: #969696;
+}

@@ -28,5 +28,11 @@
       "js": ["/contentScript/index.js"]
     }
   ],
+  "externally_connectable": {
+    "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "permissions": ["storage"]
 }
