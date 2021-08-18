@@ -4,10 +4,13 @@ let newTodoList = [];
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
 function block(items) {
-  const linearRandom = Math.floor(Math.random() * 7);
+  const linearRandom = Math.floor(Math.random() * 6);
   if (isBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
-      <h1 class="title-new">You still work list to do. Fighting!!!</h1>
+    <div class="frame flex mid column">
+      <h1 class="title-new">You still have a to-do list.</h1>
+      <p class="joke"> F**k you!!!</p>
+      </div>
       <div id="list" class="n-width flex column above"></div>
     </div>`;
 

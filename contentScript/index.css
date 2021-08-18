@@ -52,7 +52,7 @@
 .linear6 {
   background-image: linear-gradient(#1e3c72, #2a5298);
 }
-.linear7 {
+.linear0 {
   background-image: linear-gradient(#667eea, #764ba2);
 }
 .new-body {
@@ -72,8 +72,10 @@
   color: white;
   font-size: 48px;
   font-weight: bold;
-  margin-bottom: 60px;
   text-align: center;
+}
+.frame {
+  margin-bottom: 60px;
 }
 .todo-label {
   color: white;
@@ -90,4 +92,7 @@
 .list-todo {
   margin: 10px 0;
   align-items: flex-end !important;
+}
+.joke {
+  font-size: 14px;
 }
