@@ -1,6 +1,88 @@
-/* body {
-  display: none;
-} */
+.flex {
+  display: flex;
+}
+.column {
+  flex-direction: column;
+}
+.row {
+  flex-direction: row;
+}
+.mid {
+  align-items: center;
+}
+.center {
+  justify-content: center;
+}
+.first {
+  justify-content: flex-start;
+}
+.finally {
+  justify-content: flex-end;
+}
+.above {
+  align-items: flex-start;
+}
+.under {
+  align-items: flex-end;
+}
+.between {
+  justify-content: space-between;
+}
+.cover {
+  width: 300px;
+}
 .hide {
-  display: none !important;
+  display: none;
+}
+.linear1 {
+  background-image: linear-gradient(#29323c, #485563);
+}
+.linear2 {
+  background-image: linear-gradient(#13547a, #80d0c7);
+}
+.linear3 {
+  background-image: linear-gradient(#09203f, #537895);
+}
+.linear4 {
+  background-image: linear-gradient(#434343, #000000);
+}
+.linear5 {
+  background-image: linear-gradient(#868f96, #596164);
+}
+.linear6 {
+  background-image: linear-gradient(#1e3c72, #2a5298);
+}
+.linear7 {
+  background-image: linear-gradient(#667eea, #764ba2);
+}
+.new-body {
+  color: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+.title-new {
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 60px;
+  text-align: center;
+}
+.todo-label {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+.input-child {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  cursor: pointer;
 }

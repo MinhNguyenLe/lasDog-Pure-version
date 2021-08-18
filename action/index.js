@@ -17,6 +17,7 @@ const startCountdown = document.querySelector(".start-countdown");
 // communicate with background page
 function communicateBG() {
   chrome.runtime.sendMessage({ type: "action", state }, (response) => {});
+  console.log(chrome.runtime);
 }
 communicateBG();
 
@@ -28,7 +29,7 @@ function removeItem(t) {
   communicateBG();
 }
 
-function handleChecked(t, num) {
+function handleChecked(t) {
   state.listTodo.forEach((item) => {
     if (item.checkedId == t.id) {
       item.checked = !item.checked;
@@ -70,6 +71,7 @@ chrome.storage.local.get(["state"], function (result) {
   document.querySelectorAll(".list-todo").forEach((t) => {
     t.addEventListener("contextmenu", () => removeItem(t));
   });
+  communicateBG();
 });
 
 // click countdown tab
@@ -111,7 +113,7 @@ todoInput.addEventListener("keydown", (e) => {
 
     // handle check NEW item todo
     document.querySelectorAll(".input-child").forEach((label) => {
-      label.addEventListener("change", () => handleChecked(label, 1));
+      label.addEventListener("change", () => handleChecked(label));
     });
 
     //remove for NEW item todo
