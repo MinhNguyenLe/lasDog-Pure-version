@@ -1,11 +1,10 @@
 let isBlock = false;
-let newTodoList = [];
-let settingBlock = false;
+
 // document.documentElement.style.display = "none"
 
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
-function block(items) {
+function block(items, settingBlock) {
   const linearRandom = Math.floor(Math.random() * 6);
   if (isBlock && settingBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
@@ -39,28 +38,23 @@ function block(items) {
       count++;
     });
   }
-
   document.documentElement.style.display = "block";
 }
 
-// communicate with background page
-chrome.runtime.sendMessage({ type: "facebook" }, (response) => {
-  settingBlock = response.state.setting.facebook;
-  newTodoList = response.state.listTodo;
-  if (!response.state.listTodo.length) {
+chrome.storage.local.get(["state"], function (result) {
+  if (!result.state.listTodo.length) {
     if (isBlock) {
       isBlock = false;
     }
   } else {
-    response.state.listTodo.forEach((item) => {
+    result.state.listTodo.forEach((item) => {
       if (item.checked == false) isBlock = true;
     });
-    if (response.state.listTodo.every((item) => item.checked == true)) {
+    if (result.state.listTodo.every((item) => item.checked == true)) {
       if (isBlock) {
         isBlock = false;
       }
     }
   }
-  console.log(response.state);
-  block(response.state.listTodo);
+  block(result.state.listTodo, result.state.setting.facebook);
 });

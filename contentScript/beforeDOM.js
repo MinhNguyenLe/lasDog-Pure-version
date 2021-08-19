@@ -1,15 +1,11 @@
-chrome.runtime.sendMessage({ type: "beforeDOM" }, (response) => {
-  if (
-    response.state &&
-    response.state.setting &&
-    response.state.listTodo.length
-  ) {
+chrome.storage.local.get(["state"], function (result) {
+  if (result.state && result.state.setting && result.state.listTodo.length) {
     if (
-      (response.state.setting.facebook ||
-        response.state.setting.tiktok ||
-        response.state.setting.youtube ||
-        response.state.setting.instagram) &&
-      response.state.listTodo.some((item) => item.checked == false)
+      (result.state.setting.facebook ||
+        result.state.setting.tiktok ||
+        result.state.setting.youtube ||
+        result.state.setting.instagram) &&
+      result.state.listTodo.some((item) => item.checked == false)
     ) {
       document.documentElement.style.display = "none";
     }
