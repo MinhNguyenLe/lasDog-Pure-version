@@ -1,4 +1,13 @@
-let state = {};
+let state = {
+  listTodo: [],
+  countId: 0,
+  setting: {
+    facebook: false,
+    youtube: false,
+    tiktok: false,
+    instagram: false,
+  },
+};
 let isBlock = false;
 
 // set communicate

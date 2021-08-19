@@ -61,5 +61,6 @@ chrome.runtime.sendMessage({ type: "youtube" }, (response) => {
       }
     }
   }
+  console.log(response.state);
   block(response.state.listTodo);
 });

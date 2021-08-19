@@ -61,5 +61,6 @@ chrome.runtime.sendMessage({ type: "instagram" }, (response) => {
       }
     }
   }
+  console.log(response.state);
   block(response.state.listTodo);
 });
