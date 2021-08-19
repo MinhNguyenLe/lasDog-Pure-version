@@ -37,9 +37,8 @@ function block(items, settingBlock) {
         `<span class="input-child">${count}.</span>` + item.innerHTML;
       count++;
     });
-
-    document.documentElement.style.display = "block";
   }
+  document.documentElement.style.display = "block";
 }
 
 chrome.storage.local.get(["state"], function (result) {
