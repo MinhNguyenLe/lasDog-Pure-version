@@ -233,6 +233,8 @@ startCountdown.addEventListener("click", () => {
     chrome.storage.local.set({timestate}, function(){})
     // start timer
     startTimer(timestate.timeSpace, display);
+    document.getElementById("minute").value = null;
+    document.getElementById("second").value = null; 
   }
 });
 //
