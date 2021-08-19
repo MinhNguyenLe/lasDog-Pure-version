@@ -294,32 +294,40 @@ function startTimer(_timestate , display) {
 }
 startCountdown.addEventListener("click", () => {
   timestate.timeSpace = parseInt(document.getElementById("minute").value, 10) * 60 + parseInt(document.getElementById("second").value, 10);
-  //prevent nestlest clock
-  if(timestate.runState == 1){
-    clearInterval(myclock);
+  if(timestate.timeSpace == 0){
+    alert("please set the input!")
   }
-  //update state
-  timestate.runState = 1;
-  chrome.storage.local.set({timestate}, function(){})
-  // start timer
-  startTimer(timestate.timeSpace, display);
+  else {
+    document.getElementById("count-machine").style.display = "flex";
+    document.getElementById("time").innerHTML = `<span id="time">start!</span>`;
+    //prevent nestlest clock
+    if(timestate.runState == 1){
+      clearInterval(myclock);
+    }
+    //update state
+    timestate.runState = 1;
+    chrome.storage.local.set({timestate}, function(){})
+    // start timer
+    startTimer(timestate.timeSpace, display);
+  }
 });
 //
 function checking() {
+  //hide the machine
   //check the hidden process
-  document.getElementById("time").innerHTML = `<span id="time">Checking...</span>`;
+  // document.getElementById("time").innerHTML = `<span id="time"></span>`;
   chrome.storage.local.get(["timestate"], function (result) {
     let newState = result.timestate;
     if (newState.runState == 1){
+      document.getElementById("count-machine").style.display = "flex";
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
       newState.timeSpace -= skippedTime;
       if(newState.timeSpace <=0)
       {
         document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
-        
         timestate.runState = 0;
         chrome.storage.local.set({timestate}, function(){});
-        setTimeout(alert("Timeee Out!"), 300);
+        setTimeout(alert("Timeee Out!"), 500);
       }
       else {
         //update local timestate
@@ -328,14 +336,13 @@ function checking() {
         startTimer(newState.timeSpace, display);
       }
     }
-    else document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
   })
 };
 
 
 
 function startTimer(_timestate , display) {
-  var remainingTime = _timestate,
+  var remainingTime = _timestate + 1,
   minutes,
   seconds;
   

@@ -51,9 +51,10 @@
               id="minute"
               maxlength="3"
               type="number"
-              placeholder="00"
-              class="mini-input"
               value="00"
+              class="mini-input"
+              min="0"
+              
             />
           </div>
           <div class="flex row center mid">
@@ -62,9 +63,9 @@
               id="second"
               maxlength="2"
               type="number"
-              placeholder="00"
-              class="mini-input"
               value="00"
+              class="mini-input"
+              min="0"
             />
           </div>
           <button class="btn start-countdown">
@@ -74,9 +75,9 @@
             />
           </button>
         </div>
-        <div class="flex row around mid full-width">
-          <h2 class="flex row center mid">Time remaining</h2>
-          <span id="time"></span>
+        <div id="count-machine" class="flex row mid full-width">
+          <h2 class="start">Time remaining</h2>
+          <span id="time" class="start"></span>
         </div>
       </div>
       <div id="tab-setting" class="hide flex row full-width wrap">
