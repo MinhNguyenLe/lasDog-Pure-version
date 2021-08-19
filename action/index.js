@@ -226,7 +226,14 @@ blockIN.addEventListener("click", () => {
 
 
 startCountdown.addEventListener("click", () => {
-  timestate.timeSpace = parseInt(document.getElementById("minute").value, 10) * 60 + parseInt(document.getElementById("second").value, 10);
+  //checking input
+  let min = document.getElementById("minute").value;
+  let sec = document.getElementById("second").value;
+  if(!min) {min = 0};
+  if(!sec) {sec = 0};
+  //accounting timespace
+  timestate.timeSpace = parseInt(min * 60 + sec, 10);
+  console.log(timestate.timeSpace);
   if(timestate.timeSpace == 0 && timestate.runState == 0){
     alert("please set the input!")
   }
