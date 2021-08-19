@@ -77,9 +77,9 @@ chrome.storage.local.get(["state"], function (result) {
   // set value setting
   state.setting = result.state.setting;
   if (result.state.setting.facebook) blockFB.classList.add("facebook");
-  if (result.state.setting.tiktok) blockFB.classList.add("tiktok");
-  if (result.state.setting.youtube) blockFB.classList.add("youtube");
-  if (result.state.setting.instagram) blockFB.classList.add("instagram");
+  if (result.state.setting.tiktok) blockTT.classList.add("tiktok");
+  if (result.state.setting.youtube) blockYT.classList.add("youtube");
+  if (result.state.setting.instagram) blockIN.classList.add("instagram");
 
   // set begin id value
   if (result.state.countId) state.countId = result.state.countId;
