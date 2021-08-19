@@ -21,24 +21,47 @@
       "description": "Opens /action/index.html"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"],
-      "run_at": "document_start",
-      "js": ["/contentScript/beforeDOM.js"]
-    },
-    {
-      "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"],
-      "run_at": "document_idle",
-      "css": ["/contentScript/index.css"],
-      "js": ["/contentScript/index.js"]
-    }
-  ],
   "externally_connectable": {
     "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"]
   },
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage", "scripting", "tabs"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://www.facebook.com/*",
+        "https://www.tiktok.com/*",
+        "https://www.instagram.com/*"
+      ],
+      "run_at": "document_start",
+      "js": ["/contentScript/beforeDOM.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "run_at": "document_idle",
+      "css": ["/contentScript/index.css"],
+      "js": ["/contentScript/youtube.js"]
+    },
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "run_at": "document_idle",
+      "css": ["/contentScript/index.css"],
+      "js": ["/contentScript/instagram.js"]
+    },
+    {
+      "matches": ["https://www.tiktok.com/*"],
+      "run_at": "document_idle",
+      "css": ["/contentScript/index.css"],
+      "js": ["/contentScript/tiktok.js"]
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "run_at": "document_idle",
+      "css": ["/contentScript/index.css"],
+      "js": ["/contentScript/facebook.js"]
+    }
+  ]
 }

@@ -43,7 +43,7 @@ input {
   justify-content: space-between;
 }
 .cover {
-  width: 300px;
+  width: 400px;
 }
 .feature {
   box-shadow: inset 0px -1px 0px rgb(0 0 0 / 10%);
@@ -60,11 +60,6 @@ input {
   font-size: 14px;
   font-weight: bold;
   width: 150px;
-}
-.btn-todo {
-  padding: 6px 0px;
-}
-.btn-countdown {
   padding: 6px 0px;
 }
 .action {

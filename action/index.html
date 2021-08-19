@@ -26,12 +26,19 @@
           />
           Add to-do list
         </button>
+        <button class="btn btn-setting flex column center mid non-action">
+          <img
+            src="chrome-extension://amfojhdiedpdnlijjbhjnhokbnohfdfb/img/popup/setting.svg"
+            alt=""
+          />
+          Setting
+        </button>
       </section>
-      <div id="table-todo" class="hide flex column mid full-width">
+      <div id="tab-todo" class="hide flex column mid full-width">
         <input type="text" placeholder="create new" id="todo" />
         <div id="list" class="full-width flex column above"></div>
       </div>
-      <div id="table-countdown" class="flex column center mid full-width">
+      <div id="tab-countdown" class="flex column center mid full-width">
         <div class="flex row around mid full-width">
           <div class="flex row center mid">
             <label class="countdown-label" for="minute">Minutes : </label>
@@ -59,6 +66,12 @@
               alt=""
             />
           </button>
+        </div>
+      </div>
+      <div id="tab-setting" class="hide flex column mid full-width">
+        <div>
+          <input type="checkbox" id="facebook-block" />
+          <label for="facebook-block">Facebook</label>
         </div>
       </div>
     </div>

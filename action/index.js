@@ -5,19 +5,25 @@ window.oncontextmenu = function () {
 let state = {
   listTodo: [],
   countId: 0,
+  settingBlock: {
+    fb: false,
+  },
 };
 
 // list element action
 const countdown = document.querySelector(".btn-countdown");
 const todoInput = document.getElementById("todo");
+const setting = document.querySelector(".btn-setting");
 const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
 
+const blockFB = document.getElementById("facebook-block");
+
 // communicate with background page
 function communicateBG() {
   chrome.runtime.sendMessage({ type: "action", state }, (response) => {});
-  console.log(chrome.runtime);
+  console.log(state);
 }
 communicateBG();
 
@@ -59,6 +65,9 @@ chrome.storage.local.get(["state"], function (result) {
       }
     });
   }
+  // set value setting
+  if (result.state.settingBlock) state.settingBlock = result.state.settingBlock;
+
   // set begin id value
   if (result.state.countId) state.countId = result.state.countId;
 
@@ -77,20 +86,36 @@ chrome.storage.local.get(["state"], function (result) {
 // click countdown tab
 countdown.addEventListener("click", () => {
   // change interface
-  document.getElementById("table-todo").style.display = "none";
-  document.getElementById("table-countdown").style.display = "flex";
+  document.getElementById("tab-todo").style.display = "none";
+  document.getElementById("tab-setting").style.display = "none";
+  document.getElementById("tab-countdown").style.display = "flex";
 
   todo.classList.remove("action");
+  setting.classList.remove("action");
   countdown.classList.add("action");
+});
+
+// click setting tab
+setting.addEventListener("click", () => {
+  // change interface
+  document.getElementById("tab-todo").style.display = "none";
+  document.getElementById("tab-setting").style.display = "flex";
+  document.getElementById("tab-countdown").style.display = "none";
+
+  todo.classList.remove("action");
+  countdown.classList.remove("action");
+  setting.classList.add("action");
 });
 
 // click todo tab
 todo.addEventListener("click", () => {
   // change interface
-  document.getElementById("table-todo").style.display = "flex";
-  document.getElementById("table-countdown").style.display = "none";
+  document.getElementById("tab-todo").style.display = "flex";
+  document.getElementById("tab-setting").style.display = "none";
+  document.getElementById("tab-countdown").style.display = "none";
 
   countdown.classList.remove("action");
+  setting.classList.remove("action");
   todo.classList.add("action");
 });
 
@@ -132,4 +157,13 @@ todoInput.addEventListener("keydown", (e) => {
     // add data to local storage
     chrome.storage.local.set({ state }, function () {});
   }
+});
+
+//
+blockFB.addEventListener("change", () => {
+  if (blockFB.checked) state.settingBlock.fb = true;
+  else state.settingBlock.fb = false;
+
+  chrome.storage.local.set({ state }, function () {});
+  communicateBG();
 });
