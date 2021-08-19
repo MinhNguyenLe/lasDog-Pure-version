@@ -35,7 +35,12 @@
         </button>
       </section>
       <div id="tab-todo" class="hide flex column mid full-width">
-        <input type="text" placeholder="create new" id="todo" />
+        <input
+          type="text"
+          placeholder="create new"
+          id="todo"
+          class="input-todo"
+        />
         <div id="list" class="full-width flex column above"></div>
       </div>
       <div id="tab-countdown" class="flex column center mid full-width">
@@ -69,6 +74,9 @@
         </div>
       </div>
       <div id="tab-setting" class="hide flex row full-width wrap">
+        <div class="full-width flex center mid">
+          <h1 class="setting-title">Which will be apps blocked ?</h1>
+        </div>
         <div class="brand-icon flex center">
           <button id="block-facebook" class="btn-icon">Facebook</button>
         </div>

@@ -102,6 +102,9 @@ input {
 .around {
   justify-content: space-around;
 }
+.input-todo {
+  width: 300px;
+}
 .start-countdown {
   background-color: white;
   width: auto;
@@ -115,6 +118,12 @@ input {
   border-radius: 4px;
   padding: 8px 0;
   color: #969696;
+}
+.setting-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4867aa;
+  margin: 20px 0;
 }
 .input-child {
   width: 20px;
