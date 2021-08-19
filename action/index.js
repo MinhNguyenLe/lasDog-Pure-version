@@ -5,8 +5,11 @@ window.oncontextmenu = function () {
 let state = {
   listTodo: [],
   countId: 0,
-  settingBlock: {
-    fb: false,
+  setting: {
+    facebook: false,
+    youtube: false,
+    tiktok: false,
+    instagram: false,
   },
 };
 
@@ -18,7 +21,15 @@ const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
 
-const blockFB = document.getElementById("facebook-block");
+const blockFB = document.getElementById("block-facebook");
+const blockTT = document.getElementById("block-tiktok");
+const blockIN = document.getElementById("block-instagram");
+const blockYT = document.getElementById("block-youtube");
+
+// list function
+function setStorage() {
+  chrome.storage.local.set({ state }, function () {});
+}
 
 // communicate with background page
 function communicateBG() {
@@ -27,11 +38,10 @@ function communicateBG() {
 }
 communicateBG();
 
-// list function
 function removeItem(t) {
   t.remove();
   state.listTodo = state.listTodo.filter((list) => list.id != t.id);
-  chrome.storage.local.set({ state }, function () {});
+  setStorage();
   communicateBG();
 }
 
@@ -41,7 +51,7 @@ function handleChecked(t) {
       item.checked = !item.checked;
     }
   });
-  chrome.storage.local.set({ state }, function () {});
+  setStorage();
   communicateBG();
 }
 
@@ -52,7 +62,6 @@ function setOldChecked() {
     });
   });
 }
-
 // get data from local storage
 chrome.storage.local.get(["state"], function (result) {
   // show OLD item todo
@@ -66,7 +75,11 @@ chrome.storage.local.get(["state"], function (result) {
     });
   }
   // set value setting
-  if (result.state.settingBlock) state.settingBlock = result.state.settingBlock;
+  state.setting = result.state.setting;
+  if (result.state.setting.facebook) blockFB.classList.add("facebook");
+  if (result.state.setting.tiktok) blockFB.classList.add("tiktok");
+  if (result.state.setting.youtube) blockFB.classList.add("youtube");
+  if (result.state.setting.instagram) blockFB.classList.add("instagram");
 
   // set begin id value
   if (result.state.countId) state.countId = result.state.countId;
@@ -151,19 +164,57 @@ todoInput.addEventListener("keydown", (e) => {
 
     // reset value from todo input
     todoInput.value = "";
-    setOldChecked();
 
+    setOldChecked();
     communicateBG();
-    // add data to local storage
-    chrome.storage.local.set({ state }, function () {});
+    setStorage();
   }
 });
 
-//
-blockFB.addEventListener("change", () => {
-  if (blockFB.checked) state.settingBlock.fb = true;
-  else state.settingBlock.fb = false;
-
-  chrome.storage.local.set({ state }, function () {});
+// setting block fb
+blockFB.addEventListener("click", () => {
+  state.setting.facebook = !state.setting.facebook;
+  if (state.setting.facebook) {
+    blockFB.classList.add("facebook");
+  } else {
+    blockFB.classList.remove("facebook");
+  }
   communicateBG();
+  setStorage();
+});
+
+// setting block tiktok
+blockTT.addEventListener("click", () => {
+  state.setting.tiktok = !state.setting.tiktok;
+  if (state.setting.tiktok) {
+    blockTT.classList.add("tiktok");
+  } else {
+    blockTT.classList.remove("tiktok");
+  }
+  communicateBG();
+  setStorage();
+});
+
+// setting block youtube
+blockYT.addEventListener("click", () => {
+  state.setting.youtube = !state.setting.youtube;
+  if (state.setting.youtube) {
+    blockYT.classList.add("youtube");
+  } else {
+    blockYT.classList.remove("youtube");
+  }
+  communicateBG();
+  setStorage();
+});
+
+// setting block intagram
+blockIN.addEventListener("click", () => {
+  state.setting.instagram = !state.setting.instagram;
+  if (state.setting.instagram) {
+    blockIN.classList.add("instagram");
+  } else {
+    blockIN.classList.remove("instagram");
+  }
+  communicateBG();
+  setStorage();
 });

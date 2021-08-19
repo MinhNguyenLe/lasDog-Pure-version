@@ -31,6 +31,9 @@
 .cover {
   width: 300px;
 }
+.wrap {
+  flex-wrap: wrap;
+}
 .hide {
   display: none;
 }

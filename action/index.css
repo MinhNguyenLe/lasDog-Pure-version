@@ -42,6 +42,9 @@ input {
 .between {
   justify-content: space-between;
 }
+.wrap {
+  flex-wrap: wrap;
+}
 .cover {
   width: 400px;
 }
@@ -117,4 +120,29 @@ input {
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+.facebook {
+  color: #4867aa !important;
+}
+.youtube {
+  color: #ff011d !important;
+}
+.instagram {
+  color: #ea7030 !important;
+}
+.tiktok {
+  color: black !important;
+}
+.btn-icon {
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px;
+  color: rgb(220, 220, 220);
+}
+.brand-icon {
+  width: 200px;
+  padding: 12px 0;
 }

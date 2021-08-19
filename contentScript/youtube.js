@@ -1,12 +1,13 @@
 let isBlock = false;
 let newTodoList = [];
+let settingBlock = false;
 // document.documentElement.style.display = "none"
 
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
 function block(items) {
   const linearRandom = Math.floor(Math.random() * 6);
-  if (isBlock) {
+  if (isBlock && settingBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
     <div class="frame flex mid column">
       <h1 class="title-new">You still have a to-do list.</h1>
@@ -44,6 +45,7 @@ function block(items) {
 
 // communicate with background page
 chrome.runtime.sendMessage({ type: "youtube" }, (response) => {
+  settingBlock = response.state.setting.youtube;
   newTodoList = response.state.listTodo;
   if (!response.state.listTodo.length) {
     if (isBlock) {
