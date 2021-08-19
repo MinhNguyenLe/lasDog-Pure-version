@@ -30,18 +30,11 @@ const blockYT = document.getElementById("block-youtube");
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
-// communicate with background page
-function communicateBG() {
-  chrome.runtime.sendMessage({ type: "action", state }, (response) => {});
-  console.log(state);
-}
-communicateBG();
 
 function removeItem(t) {
   t.remove();
   state.listTodo = state.listTodo.filter((list) => list.id != t.id);
   setStorage();
-  communicateBG();
 }
 
 function handleChecked(t) {
@@ -51,7 +44,6 @@ function handleChecked(t) {
     }
   });
   setStorage();
-  communicateBG();
 }
 
 function setOldChecked() {
@@ -93,7 +85,6 @@ chrome.storage.local.get(["state"], function (result) {
   document.querySelectorAll(".list-todo").forEach((t) => {
     t.addEventListener("contextmenu", () => removeItem(t));
   });
-  communicateBG();
 });
 
 // click countdown tab
@@ -166,7 +157,6 @@ todoInput.addEventListener("keydown", (e) => {
     todoInput.value = "";
 
     setOldChecked();
-    communicateBG();
     setStorage();
   }
 });
@@ -179,7 +169,6 @@ blockFB.addEventListener("click", () => {
   } else {
     blockFB.classList.remove("facebook");
   }
-  communicateBG();
   setStorage();
 });
 
@@ -191,7 +180,6 @@ blockTT.addEventListener("click", () => {
   } else {
     blockTT.classList.remove("tiktok");
   }
-  communicateBG();
   setStorage();
 });
 
@@ -203,7 +191,6 @@ blockYT.addEventListener("click", () => {
   } else {
     blockYT.classList.remove("youtube");
   }
-  communicateBG();
   setStorage();
 });
 
@@ -215,6 +202,5 @@ blockIN.addEventListener("click", () => {
   } else {
     blockIN.classList.remove("instagram");
   }
-  communicateBG();
   setStorage();
 });
