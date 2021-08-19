@@ -24,9 +24,6 @@
   "externally_connectable": {
     "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"]
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "permissions": ["storage", "scripting", "tabs"],
   "content_scripts": [
     {
