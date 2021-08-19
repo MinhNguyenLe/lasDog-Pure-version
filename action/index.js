@@ -67,7 +67,6 @@ chrome.storage.local.get(["state"], function (result) {
   }
   // set value setting
   state.setting = result.state.setting;
-  console.log(state.setting);
   if (result.state.setting.facebook) blockFB.classList.add("facebook");
   if (result.state.setting.tiktok) blockTT.classList.add("tiktok");
   if (result.state.setting.youtube) blockYT.classList.add("youtube");
