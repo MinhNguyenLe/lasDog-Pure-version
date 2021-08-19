@@ -7,6 +7,9 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     state = msg.state;
     response({ state });
   }
+  if (msg.type == "beforeDOM") {
+    response({ state });
+  }
   if (msg.type == "matchParent") {
     response({ state });
   }

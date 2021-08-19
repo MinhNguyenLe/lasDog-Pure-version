@@ -44,7 +44,6 @@ function block(items) {
 
 // communicate with background page
 chrome.runtime.sendMessage({ type: "matchParent" }, (response) => {
-  console.log(document.getElementsByTagName("BODY")[0]);
   newTodoList = response.state.listTodo;
   if (!response.state.listTodo.length) {
     if (isBlock) {
