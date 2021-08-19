@@ -214,10 +214,8 @@ startCountdown.addEventListener("click", () => {
   //checking input
   let min = document.getElementById("minute").value;
   let sec = document.getElementById("second").value;
-  if(!min) {min = 0};
-  if(!sec) {sec = 0};
   //accounting timespace
-  timestate.timeSpace = parseInt(min * 60 + sec, 10);
+  timestate.timeSpace = parseInt((min|| 0 ) * 60 + (sec || 0 ), 10);
   console.log(timestate.timeSpace);
   if(timestate.timeSpace == 0 && timestate.runState == 0){
     alert("please set the input!")
@@ -253,7 +251,7 @@ function checking() {
         document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
         timestate.runState = 0;
         chrome.storage.local.set({timestate}, function(){});
-        setTimeout(alert("Timeee Out!"), 500);
+        setTimeout(function(x = "Time out"){alert(x)}, 500);
       }
       else {
         //update local timestate
