@@ -30,7 +30,7 @@ const blockYT = document.getElementById("block-youtube");
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
-
+setStorage();
 // communicate with background page
 function communicateBG() {
   chrome.runtime.sendMessage({ type: "action", state }, (response) => {});
