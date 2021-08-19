@@ -97,7 +97,7 @@ input {
   word-wrap: break-word;
 }
 .mini-input {
-  width: 24px;
+  width: 34px;
 }
 .around {
   justify-content: space-around;
@@ -154,4 +154,19 @@ input {
 .brand-icon {
   width: 200px;
   padding: 12px 0;
+}
+
+#time {
+  font-size: 20px;
+  color: #ff011d;
+}
+
+.start {
+  justify-content: flex-start;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#count-machine {
+  display: none;
 }
