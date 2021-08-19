@@ -1,5 +1,6 @@
 let isBlock = false;
 let newTodoList = [];
+// document.documentElement.style.display = "none"
 
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
@@ -37,10 +38,13 @@ function block(items) {
       count++;
     });
   }
+
+  document.documentElement.style.display = "block";
 }
 
 // communicate with background page
 chrome.runtime.sendMessage({ type: "matchParent" }, (response) => {
+  console.log(document.getElementsByTagName("BODY")[0]);
   newTodoList = response.state.listTodo;
   if (!response.state.listTodo.length) {
     if (isBlock) {

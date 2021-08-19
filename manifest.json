@@ -24,6 +24,12 @@
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"],
+      "run_at": "document_start",
+      "js": ["/contentScript/beforeDOM.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"],
+      "run_at": "document_idle",
       "css": ["/contentScript/index.css"],
       "js": ["/contentScript/index.js"]
     }
