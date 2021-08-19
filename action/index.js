@@ -12,7 +12,11 @@ let state = {
     instagram: false,
   },
 };
-
+var timestate = {
+  timeSpace : 0,
+  runState: 0,
+  posponTime: Date.now()
+};
 // list element action
 const countdown = document.querySelector(".btn-countdown");
 const todoInput = document.getElementById("todo");
@@ -20,6 +24,7 @@ const setting = document.querySelector(".btn-setting");
 const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
+const display = document.querySelector('#time');
 
 const blockFB = document.getElementById("block-facebook");
 const blockTT = document.getElementById("block-tiktok");
@@ -218,3 +223,142 @@ blockIN.addEventListener("click", () => {
   communicateBG();
   setStorage();
 });
+
+//handle countdown
+startCountdown.addEventListener("click", () => {
+  timestate.timeSpace = parseInt(document.getElementById("minute").value, 10) * 60 + parseInt(document.getElementById("second").value, 10);
+  //prevent nestlest clock
+  if(timestate.runState == 1){
+    clearInterval(myclock);
+  }
+  //update state
+  timestate.runState = 1;
+  chrome.storage.local.set({timestate}, function(){})
+  // start timer
+  startTimer(timestate.timeSpace, display);
+});
+//
+function checking() {
+  //check the hidden process
+  document.getElementById("time").innerHTML = `<span id="time">Checking...</span>`;
+  chrome.storage.local.get(["timestate"], function (result) {
+    let newState = result.timestate;
+    if (newState.runState == 1){
+      skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
+      newState.timeSpace -= skippedTime;
+      if(newState.timeSpace <=0)
+      {
+        alert("Time Out!");
+        timestate.runState = 0;
+        chrome.storage.local.set({timestate}, function(){})
+      }
+      else {
+        //update local timestate
+        timestate.runState = 1;
+        chrome.storage.local.set({timestate}, function(){})
+        startTimer(newState.timeSpace, display);
+      }
+    }
+    else document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
+  })
+};
+
+
+
+function startTimer(_timestate , display) {
+  var remainingTime = _timestate,
+  minutes,
+  seconds;
+  
+  var myclock = setInterval(function () {
+    if (--remainingTime >= 0) {
+      minutes = parseInt(remainingTime / 60, 10);
+      seconds = parseInt(remainingTime % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      //render time machine
+      display.textContent = minutes + ":" + seconds;
+      //update time remaining & posponTime
+      timestate.timeSpace = remainingTime;
+      timestate.posponTime = Date.now();
+      chrome.storage.local.set({timestate}, function(){})
+    }
+    else {
+          alert("Time Out!");
+          timestate.runState = 0;
+          chrome.storage.local.set({timestate}, function(){})
+          clearInterval(myclock);
+    }
+  }, 1000);
+}
+startCountdown.addEventListener("click", () => {
+  timestate.timeSpace = parseInt(document.getElementById("minute").value, 10) * 60 + parseInt(document.getElementById("second").value, 10);
+  //prevent nestlest clock
+  if(timestate.runState == 1){
+    clearInterval(myclock);
+  }
+  //update state
+  timestate.runState = 1;
+  chrome.storage.local.set({timestate}, function(){})
+  // start timer
+  startTimer(timestate.timeSpace, display);
+});
+//
+function checking() {
+  //check the hidden process
+  document.getElementById("time").innerHTML = `<span id="time">Checking...</span>`;
+  chrome.storage.local.get(["timestate"], function (result) {
+    let newState = result.timestate;
+    if (newState.runState == 1){
+      skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
+      newState.timeSpace -= skippedTime;
+      if(newState.timeSpace <=0)
+      {
+        document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
+        
+        timestate.runState = 0;
+        chrome.storage.local.set({timestate}, function(){});
+        setTimeout(alert("Timeee Out!"), 300);
+      }
+      else {
+        //update local timestate
+        timestate.runState = 1;
+        chrome.storage.local.set({timestate}, function(){})
+        startTimer(newState.timeSpace, display);
+      }
+    }
+    else document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
+  })
+};
+
+
+
+function startTimer(_timestate , display) {
+  var remainingTime = _timestate,
+  minutes,
+  seconds;
+  
+  var myclock = setInterval(function () {
+    if (--remainingTime >= 0) {
+      minutes = parseInt(remainingTime / 60, 10);
+      seconds = parseInt(remainingTime % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      //render time machine
+      display.textContent = minutes + ":" + seconds;
+      //update time remaining & posponTime
+      timestate.timeSpace = remainingTime;
+      timestate.posponTime = Date.now();
+      chrome.storage.local.set({timestate}, function(){})
+    }
+    else {
+          alert("Time Out!");
+          timestate.runState = 0;
+          chrome.storage.local.set({timestate}, function(){})
+          clearInterval(myclock);
+    }
+  }, 1000);
+}
+checking();
