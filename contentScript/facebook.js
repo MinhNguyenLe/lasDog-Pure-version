@@ -57,6 +57,4 @@ chrome.storage.local.get(["state"], function (result) {
     }
   }
   block(result.state.listTodo, result.state.setting.facebook);
-
-  console.log(result.state);
 });
