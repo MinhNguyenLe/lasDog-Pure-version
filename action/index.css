@@ -157,16 +157,25 @@ input {
 }
 
 #time {
-  font-size: 20px;
-  color: #ff011d;
+  font-size: 22px;
+  color: #1da1f2;
 }
 
 .start {
   justify-content: flex-start;
   margin-left: 20px;
   margin-right: 20px;
+  font-size: 16px;
+  color: rgb(134, 134, 134);
 }
 
 #count-machine {
   display: none;
+}
+.img-tab {
+  max-width: 32px;
+  fill: #1da1f2;
+}
+.icon-action {
+  fill: white !important;
 }

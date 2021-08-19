@@ -13,9 +13,9 @@ let state = {
   },
 };
 var timestate = {
-  timeSpace : 0,
+  timeSpace: 0,
   runState: 0,
-  posponTime: Date.now()
+  posponTime: Date.now(),
 };
 // list element action
 const countdown = document.querySelector(".btn-countdown");
@@ -24,12 +24,16 @@ const setting = document.querySelector(".btn-setting");
 const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
-const display = document.querySelector('#time');
+const display = document.querySelector("#time");
 
 const blockFB = document.getElementById("block-facebook");
 const blockTT = document.getElementById("block-tiktok");
 const blockIN = document.getElementById("block-instagram");
 const blockYT = document.getElementById("block-youtube");
+
+const iconST = document.getElementById("icon-setting");
+const iconTD = document.getElementById("icon-todo");
+const iconCD = document.getElementById("icon-countdown");
 
 // list function
 function setStorage() {
@@ -101,6 +105,10 @@ countdown.addEventListener("click", () => {
   todo.classList.remove("action");
   setting.classList.remove("action");
   countdown.classList.add("action");
+
+  iconCD.classList.add("icon-action");
+  iconTD.classList.remove("icon-action");
+  iconST.classList.remove("icon-action");
 });
 
 // click setting tab
@@ -113,6 +121,10 @@ setting.addEventListener("click", () => {
   todo.classList.remove("action");
   countdown.classList.remove("action");
   setting.classList.add("action");
+
+  iconTD.classList.remove("icon-action");
+  iconCD.classList.remove("icon-action");
+  iconST.classList.add("icon-action");
 });
 
 // click todo tab
@@ -125,6 +137,10 @@ todo.addEventListener("click", () => {
   countdown.classList.remove("action");
   setting.classList.remove("action");
   todo.classList.add("action");
+
+  iconCD.classList.remove("icon-action");
+  iconTD.classList.add("icon-action");
+  iconST.classList.remove("icon-action");
 });
 
 // input todo
@@ -209,32 +225,32 @@ blockIN.addEventListener("click", () => {
   setStorage();
 });
 
-
 startCountdown.addEventListener("click", () => {
   //checking input
   let min = document.getElementById("minute").value;
   let sec = document.getElementById("second").value;
   //accounting timespace
-  timestate.timeSpace = parseInt((min|| 0 ) * 60 + (sec || 0 ), 10);
+  timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
   console.log(timestate.timeSpace);
-  if(timestate.timeSpace == 0 && timestate.runState == 0){
-    alert("please set the input!")
-  }
-  else {
+  if (timestate.timeSpace == 0 && timestate.runState == 0) {
+    alert("please set the input!");
+  } else {
     document.getElementById("count-machine").style.display = "flex";
-    if(timestate.runState == 0)
-      document.getElementById("time").innerHTML = `<span id="time">start!</span>`;
+    if (timestate.runState == 0)
+      document.getElementById(
+        "time"
+      ).innerHTML = `<span id="time">start!</span>`;
     //prevent nestlest clock
-    else if(timestate.runState == 1){
+    else if (timestate.runState == 1) {
       clearInterval(myclock);
-    };
+    }
     //update state
     timestate.runState = 1;
-    chrome.storage.local.set({timestate}, function(){})
+    chrome.storage.local.set({ timestate }, function () {});
     // start timer
     startTimer(timestate.timeSpace, display);
     document.getElementById("minute").value = null;
-    document.getElementById("second").value = null; 
+    document.getElementById("second").value = null;
   }
 });
 //
@@ -244,34 +260,34 @@ function checking() {
   // document.getElementById("time").innerHTML = `<span id="time"></span>`;
   chrome.storage.local.get(["timestate"], function (result) {
     let newState = result.timestate;
-    if (newState.runState == 1){
+    if (newState.runState == 1) {
       document.getElementById("count-machine").style.display = "flex";
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
       newState.timeSpace -= skippedTime;
-      if(newState.timeSpace <=0)
-      {
-        document.getElementById("time").innerHTML = `<span id="time">Please start!</span>`;
+      if (newState.timeSpace <= 0) {
+        document.getElementById(
+          "time"
+        ).innerHTML = `<span id="time">Please start!</span>`;
         timestate.runState = 0;
-        chrome.storage.local.set({timestate}, function(){});
-        setTimeout(function(x = "Time out"){alert(x)}, 500);
-      }
-      else {
+        chrome.storage.local.set({ timestate }, function () {});
+        setTimeout(function (x = "Time out") {
+          alert(x);
+        }, 500);
+      } else {
         //update local timestate
         timestate.runState = 1;
-        chrome.storage.local.set({timestate}, function(){})
+        chrome.storage.local.set({ timestate }, function () {});
         startTimer(newState.timeSpace, display);
       }
     }
-  })
-};
+  });
+}
 
-
-
-function startTimer(_timestate , display) {
+function startTimer(_timestate, display) {
   var remainingTime = _timestate + 1,
-  minutes,
-  seconds;
-  
+    minutes,
+    seconds;
+
   var myclock = setInterval(function () {
     if (--remainingTime >= 0) {
       minutes = parseInt(remainingTime / 60, 10);
@@ -284,13 +300,12 @@ function startTimer(_timestate , display) {
       //update time remaining & posponTime
       timestate.timeSpace = remainingTime;
       timestate.posponTime = Date.now();
-      chrome.storage.local.set({timestate}, function(){})
-    }
-    else {
-          alert("Time Out!");
-          timestate.runState = 0;
-          chrome.storage.local.set({timestate}, function(){})
-          clearInterval(myclock);
+      chrome.storage.local.set({ timestate }, function () {});
+    } else {
+      alert("Time Out!");
+      timestate.runState = 0;
+      chrome.storage.local.set({ timestate }, function () {});
+      clearInterval(myclock);
     }
   }, 1000);
 }
