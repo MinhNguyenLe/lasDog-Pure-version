@@ -126,10 +126,12 @@ chrome.storage.local.get(["state"], function (result) {
 
     // for count down
     let newState = result.state.timestate;
+
     if (newState.runState == 1) {
       document.getElementById("count-machine").style.display = "flex";
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
       newState.timeSpace -= skippedTime;
+
       if (newState.timeSpace <= 0) {
         document.getElementById(
           "time"

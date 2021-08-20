@@ -5,7 +5,9 @@ chrome.storage.local.get(["state"], function (result) {
         result.state.setting.tiktok ||
         result.state.setting.youtube ||
         result.state.setting.instagram) &&
-      result.state.listTodo.some((item) => item.checked == false)
+      result.state.listTodo.some(
+        (item) => item.checked == false || result.state.timestate.runState
+      )
     ) {
       document.documentElement.style.display = "none";
     }
