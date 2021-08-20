@@ -37,6 +37,8 @@ const iconST = document.getElementById("icon-setting");
 const iconTD = document.getElementById("icon-todo");
 const iconCD = document.getElementById("icon-countdown");
 
+const second = document.getElementById("second");
+const minute = document.getElementById("minute");
 // list function
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
@@ -319,5 +321,19 @@ startCountdown.addEventListener("click", () => {
     startTimer(state.timestate.timeSpace, display);
     document.getElementById("minute").value = null;
     document.getElementById("second").value = null;
+  }
+});
+
+second.addEventListener("input", (e) => {
+  if (e.target.value.length > 2) {
+    let a = e.target.value.toString().slice(0, 2);
+    e.target.value = parseInt(a);
+  }
+});
+
+minute.addEventListener("input", (e) => {
+  if (e.target.value.length > 3) {
+    let a = e.target.value.toString().slice(0, 3);
+    e.target.value = parseInt(a);
   }
 });
