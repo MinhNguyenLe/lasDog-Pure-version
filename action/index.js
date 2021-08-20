@@ -25,6 +25,7 @@ const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
 const display = document.querySelector("#time");
+const timeOutAudio = document.getElementById("myAudio"); 
 
 const blockFB = document.getElementById("block-facebook");
 const blockTT = document.getElementById("block-tiktok");
@@ -84,8 +85,10 @@ function startTimer(_timestate, display) {
 
       setStorage();
     } else {
-      alert("Time Out!");
       state.timestate.runState = 0;
+      document.getElementById("time").innerHTML = `<span id="time">Time out!</span>`;
+      timeOutAudio.play();
+      setTimeout(function(x = "none") {document.getElementById("count-machine").style.display = x},2000);
       setStorage();
       clearInterval(myclock);
     }
@@ -133,14 +136,11 @@ chrome.storage.local.get(["state"], function (result) {
       newState.timeSpace -= skippedTime;
 
       if (newState.timeSpace <= 0) {
-        document.getElementById(
-          "time"
-        ).innerHTML = `<span id="time">Please start!</span>`;
         state.timestate.runState = 0;
         setStorage();
-        setTimeout(function (x = "Time out") {
-          alert(x);
-        }, 500);
+        document.getElementById("time").innerHTML = `<span id="time">Time out!</span>`;
+        timeOutAudio.play();
+        setTimeout(function(x = "none") {document.getElementById("count-machine").style.display = x},2000);
       } else {
         //update local timestate
         state.timestate.runState = 1;
@@ -311,3 +311,5 @@ startCountdown.addEventListener("click", () => {
     document.getElementById("second").value = null;
   }
 });
+
+//handle input

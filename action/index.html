@@ -200,7 +200,7 @@
             <label class="countdown-label" for="minute">Minutes : </label>
             <input
               id="minute"
-              maxlength="3"
+              maxlength="2"
               type="number"
               placeholder="00"
               class="mini-input"
@@ -223,6 +223,9 @@
         <div id="count-machine" class="flex row mid full-width">
           <h2 class="start">Time remaining</h2>
           <span id="time" class="start"></span>
+          <audio id="myAudio">
+            <source src="../audio/timeout.mp3" type="audio/mp3">
+          </audio>
         </div>
       </div>
       <div id="tab-setting" class="hide flex row full-width wrap">

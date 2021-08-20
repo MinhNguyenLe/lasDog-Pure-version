@@ -166,6 +166,7 @@ input {
   justify-content: flex-start;
   margin-left: 20px;
   margin-right: 20px;
+  padding-bottom: 10px;
   font-size: 16px;
   color: rgb(134, 134, 134);
 }
