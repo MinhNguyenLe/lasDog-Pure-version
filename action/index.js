@@ -297,25 +297,25 @@ startCountdown.addEventListener("click", () => {
   state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
   if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
     alert("please set the input!");
-  } else {
+  } 
+  else {
     document.getElementById("count-machine").style.display = "flex";
-    if (state.timestate.runState == 0)
-      document.getElementById(
-        "time"
-      ).innerHTML = `<span id="time">start!</span>`;
+    if (state.timestate.runState == 0){
+      document.getElementById("time").innerHTML = `<span id="time">start!</span>`;
+      //update state
+      state.timestate.runState = 1;
+      setStorage();
+
+      // start timer
+      startTimer(state.timestate.timeSpace, display);
+      document.getElementById("minute").value = null;
+      document.getElementById("second").value = null;
+    }
+      
     //prevent nestlest clock
     else if (state.timestate.runState == 1) {
-      clearInterval(myclock);
+      //console.log("error_behave");
     }
-
-    //update state
-    state.timestate.runState = 1;
-    setStorage();
-
-    // start timer
-    startTimer(state.timestate.timeSpace, display);
-    document.getElementById("minute").value = null;
-    document.getElementById("second").value = null;
   }
 });
 
