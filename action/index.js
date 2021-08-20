@@ -15,7 +15,7 @@ let state = {
     timeSpace: 0,
     runState: 0,
     posponTime: Date.now(),
-    deadline: 0
+    deadline: 0,
   },
 };
 // list element action
@@ -26,7 +26,7 @@ const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
 const startCountdown = document.querySelector(".start-countdown");
 const display = document.querySelector("#time");
-const timeOutAudio = document.getElementById("myAudio"); 
+const timeOutAudio = document.getElementById("myAudio");
 
 const blockFB = document.getElementById("block-facebook");
 const blockTT = document.getElementById("block-tiktok");
@@ -87,9 +87,13 @@ function startTimer(_timestate, display) {
       setStorage();
     } else {
       state.timestate.runState = 0;
-      document.getElementById("time").innerHTML = `<span id="time">Time out!</span>`;
+      document.getElementById(
+        "time"
+      ).innerHTML = `<span id="time">Time out!</span>`;
       timeOutAudio.play();
-      setTimeout(function(x = "none") {document.getElementById("count-machine").style.display = x},2000);
+      setTimeout(function (x = "none") {
+        document.getElementById("count-machine").style.display = x;
+      }, 2000);
       setStorage();
       clearInterval(myclock);
     }
@@ -130,12 +134,7 @@ chrome.storage.local.get(["state"], function (result) {
 
     // for count down
     let newState = result.state.timestate;
-    setInputFilter(document.getElementById("second"), function(value) {
-      return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 99);
-    });
-    setInputFilter(document.getElementById("minute"), function(value) {
-      return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 99);
-    });
+
     if (newState.runState == 1) {
       document.getElementById("count-machine").style.display = "flex";
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
@@ -144,9 +143,13 @@ chrome.storage.local.get(["state"], function (result) {
       if (newState.timeSpace <= 0) {
         state.timestate.runState = 0;
         setStorage();
-        document.getElementById("time").innerHTML = `<span id="time">Time out!</span>`;
+        document.getElementById(
+          "time"
+        ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
-        setTimeout(function(x = "none") {document.getElementById("count-machine").style.display = x},2000);
+        setTimeout(function (x = "none") {
+          document.getElementById("count-machine").style.display = x;
+        }, 2000);
       } else {
         //update local timestate
         state.timestate.runState = 1;
@@ -291,8 +294,8 @@ startCountdown.addEventListener("click", () => {
   //checking input
   let min = document.getElementById("minute").value;
   let sec = document.getElementById("second").value;
-  state.timestate.deadline = Date.now() + (min*60 + sec)*1000;
-  chrome.storage.local.set({state}, function() {});
+  state.timestate.deadline = Date.now() + (min * 60 + sec) * 1000;
+  chrome.storage.local.set({ state }, function () {});
   //accounting timespace
   state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
   if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
@@ -318,19 +321,3 @@ startCountdown.addEventListener("click", () => {
     document.getElementById("second").value = null;
   }
 });
-
-//handle input
-function setInputFilter(textbox, inputFilter) {
-  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-    textbox.addEventListener(event, function() {
-      if (inputFilter(this.value)) {
-        this.oldValue = this.value;
-        this.oldSelectionStart = this.selectionStart;
-        this.oldSelectionEnd = this.selectionEnd;
-      } else if (this.hasOwnProperty("oldValue")) {
-        this.value = this.oldValue;
-        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-      }
-    });
-  });
-}

@@ -107,6 +107,7 @@ chrome.storage.local.get(["state"], function (result) {
       }
     }
   }
+  console.log(new Date().getTime());
   if (result.state.timestate.runState) isBlockForCountDown = true;
   if (isBlockForTodo && !isBlockForCountDown)
     blockForTodo(result.state.listTodo, result.state.setting.facebook);
