@@ -107,7 +107,7 @@ chrome.storage.local.get(["state"], function (result) {
       }
     }
   }
-  if (result.state.timestate.deadline - new Date()) isBlockForCountDown = true;
+  if (result.state.timestate.deadline - Date.now()) isBlockForCountDown = true;
   if (isBlockForTodo && !isBlockForCountDown)
     blockForTodo(result.state.listTodo, result.state.setting.youtube);
   if (!isBlockForTodo && isBlockForCountDown)

@@ -297,6 +297,7 @@ startCountdown.addEventListener("click", () => {
   let min = document.getElementById("minute").value;
   let sec = document.getElementById("second").value;
   state.timestate.deadline = Date.now() + (min * 60 + sec) * 1000;
+  console.log(state);
   chrome.storage.local.set({ state }, function () {});
   //accounting timespace
   state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
