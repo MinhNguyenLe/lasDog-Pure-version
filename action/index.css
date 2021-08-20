@@ -97,7 +97,7 @@ input {
   word-wrap: break-word;
 }
 .mini-input {
-  width: 34px;
+  width: 24px;
 }
 .around {
   justify-content: space-around;
