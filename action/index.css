@@ -111,6 +111,7 @@ input {
   border: 1px solid #1da1f2;
   padding: 6px 10px;
   border-radius: 6px;
+  color: #1da1f2;
 }
 .btn-start-todo {
   background-color: white;

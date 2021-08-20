@@ -10,7 +10,6 @@ function block(items, settingBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
     <div class="frame flex mid column">
       <h1 class="title-new">You still have a to-do list.</h1>
-      <p class="joke"> F**k you!!!</p>
       </div>
       <div id="list" class="n-width flex column above"></div>
     </div>`;

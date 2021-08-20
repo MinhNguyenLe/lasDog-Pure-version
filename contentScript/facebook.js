@@ -4,13 +4,12 @@ let isBlock = false;
 
 const bodyMain = document.getElementsByTagName("BODY")[0];
 
-function block(items, settingBlock) {
+function blockForTodo(items, settingBlock) {
   const linearRandom = Math.floor(Math.random() * 6);
   if (isBlock && settingBlock) {
     bodyMain.innerHTML = `<div class="new-body flex column center mid">
     <div class="frame flex mid column">
       <h1 class="title-new">You still have a to-do list.</h1>
-      <p class="joke"> F**k you!!!</p>
       </div>
       <div id="list" class="n-width flex column above"></div>
     </div>`;
@@ -41,6 +40,23 @@ function block(items, settingBlock) {
   document.documentElement.style.display = "block";
 }
 
+function blockForCountDown(settingBlock) {
+  const linearRandom = Math.floor(Math.random() * 6);
+  if (isBlock && settingBlock) {
+    bodyMain.innerHTML = `<div class="new-body flex column center mid">
+    <div class="frame flex mid column">
+      <h1 class="title-new">You still have a to-do list.</h1>
+      </div>
+      <div id="list" class="n-width flex column above"></div>
+    </div>`;
+
+    // random background-gradient
+    const newBody = document.querySelector(".new-body");
+    newBody.classList.add(`linear${linearRandom}`);
+  }
+  document.documentElement.style.display = "block";
+}
+
 chrome.storage.local.get(["state"], function (result) {
   if (!result.state.listTodo.length) {
     if (isBlock) {
@@ -56,5 +72,5 @@ chrome.storage.local.get(["state"], function (result) {
       }
     }
   }
-  block(result.state.listTodo, result.state.setting.facebook);
+  blockForTodo(result.state.listTodo, result.state.setting.facebook);
 });

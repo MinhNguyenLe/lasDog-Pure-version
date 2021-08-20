@@ -11,11 +11,11 @@ let state = {
     tiktok: false,
     instagram: false,
   },
-};
-var timestate = {
-  timeSpace: 0,
-  runState: 0,
-  posponTime: Date.now(),
+  timestate: {
+    timeSpace: 0,
+    runState: 0,
+    posponTime: Date.now(),
+  },
 };
 // list element action
 const countdown = document.querySelector(".btn-countdown");
@@ -39,7 +39,6 @@ const iconCD = document.getElementById("icon-countdown");
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
-
 function removeItem(t) {
   t.remove();
   state.listTodo = state.listTodo.filter((list) => list.id != t.id);
@@ -62,37 +61,92 @@ function setOldChecked() {
     });
   });
 }
+
+function startTimer(_timestate, display) {
+  var remainingTime = _timestate + 1,
+    minutes,
+    seconds;
+
+  var myclock = setInterval(function () {
+    if (--remainingTime >= 0) {
+      minutes = parseInt(remainingTime / 60, 10);
+      seconds = parseInt(remainingTime % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      //render time machine
+      display.textContent = minutes + ":" + seconds;
+
+      //update time remaining & posponTime
+      state.timestate.timeSpace = remainingTime;
+      state.timestate.posponTime = Date.now();
+
+      setStorage();
+    } else {
+      alert("Time Out!");
+      state.timestate.runState = 0;
+      setStorage();
+      clearInterval(myclock);
+    }
+  }, 1000);
+}
 // get data from local storage
 chrome.storage.local.get(["state"], function (result) {
-  // show OLD item todo
-  if (result.state && result.state.listTodo) {
-    result.state.listTodo.forEach((l) => {
-      if (l.new) {
-        state.listTodo.push(l);
-        list.innerHTML += l.new;
-        setOldChecked();
-      }
+  if (result.state) {
+    // show OLD item todo
+    if (result.state && result.state.listTodo) {
+      result.state.listTodo.forEach((l) => {
+        if (l.new) {
+          state.listTodo.push(l);
+          list.innerHTML += l.new;
+          setOldChecked();
+        }
+      });
+    }
+    // set value setting
+    state.setting = result.state.setting;
+    if (result.state.setting.facebook) blockFB.classList.add("facebook");
+    if (result.state.setting.tiktok) blockTT.classList.add("tiktok");
+    if (result.state.setting.youtube) blockYT.classList.add("youtube");
+    if (result.state.setting.instagram) blockIN.classList.add("instagram");
+
+    // set begin id value
+    if (result.state.countId) state.countId = result.state.countId;
+
+    // handle check OLD item todo
+    document.querySelectorAll(".input-child").forEach((label) => {
+      label.addEventListener("change", () => handleChecked(label));
     });
+
+    // remove for OLD item todo
+    document.querySelectorAll(".list-todo").forEach((t) => {
+      t.addEventListener("contextmenu", () => removeItem(t));
+    });
+
+    // for count down
+    let newState = result.state.timestate;
+    if (newState.runState == 1) {
+      document.getElementById("count-machine").style.display = "flex";
+      skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
+      newState.timeSpace -= skippedTime;
+      if (newState.timeSpace <= 0) {
+        document.getElementById(
+          "time"
+        ).innerHTML = `<span id="time">Please start!</span>`;
+        state.timestate.runState = 0;
+        setStorage();
+        setTimeout(function (x = "Time out") {
+          alert(x);
+        }, 500);
+      } else {
+        //update local timestate
+        state.timestate.runState = 1;
+        setStorage();
+        startTimer(newState.timeSpace, display);
+      }
+    }
   }
-  // set value setting
-  state.setting = result.state.setting;
-  if (result.state.setting.facebook) blockFB.classList.add("facebook");
-  if (result.state.setting.tiktok) blockTT.classList.add("tiktok");
-  if (result.state.setting.youtube) blockYT.classList.add("youtube");
-  if (result.state.setting.instagram) blockIN.classList.add("instagram");
-
-  // set begin id value
-  if (result.state.countId) state.countId = result.state.countId;
-
-  // handle check OLD item todo
-  document.querySelectorAll(".input-child").forEach((label) => {
-    label.addEventListener("change", () => handleChecked(label));
-  });
-
-  // remove for OLD item todo
-  document.querySelectorAll(".list-todo").forEach((t) => {
-    t.addEventListener("contextmenu", () => removeItem(t));
-  });
 });
 
 // click countdown tab
@@ -229,84 +283,29 @@ startCountdown.addEventListener("click", () => {
   //checking input
   let min = document.getElementById("minute").value;
   let sec = document.getElementById("second").value;
+
   //accounting timespace
-  timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
-  console.log(timestate.timeSpace);
-  if (timestate.timeSpace == 0 && timestate.runState == 0) {
+  state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
+  if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
     alert("please set the input!");
   } else {
     document.getElementById("count-machine").style.display = "flex";
-    if (timestate.runState == 0)
+    if (state.timestate.runState == 0)
       document.getElementById(
         "time"
       ).innerHTML = `<span id="time">start!</span>`;
     //prevent nestlest clock
-    else if (timestate.runState == 1) {
+    else if (state.timestate.runState == 1) {
       clearInterval(myclock);
     }
+
     //update state
-    timestate.runState = 1;
-    chrome.storage.local.set({ timestate }, function () {});
+    state.timestate.runState = 1;
+    setStorage();
+
     // start timer
-    startTimer(timestate.timeSpace, display);
+    startTimer(state.timestate.timeSpace, display);
     document.getElementById("minute").value = null;
     document.getElementById("second").value = null;
   }
 });
-//
-function checking() {
-  //hide the machine
-  //check the hidden process
-  // document.getElementById("time").innerHTML = `<span id="time"></span>`;
-  chrome.storage.local.get(["timestate"], function (result) {
-    let newState = result.timestate;
-    if (newState.runState == 1) {
-      document.getElementById("count-machine").style.display = "flex";
-      skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
-      newState.timeSpace -= skippedTime;
-      if (newState.timeSpace <= 0) {
-        document.getElementById(
-          "time"
-        ).innerHTML = `<span id="time">Please start!</span>`;
-        timestate.runState = 0;
-        chrome.storage.local.set({ timestate }, function () {});
-        setTimeout(function (x = "Time out") {
-          alert(x);
-        }, 500);
-      } else {
-        //update local timestate
-        timestate.runState = 1;
-        chrome.storage.local.set({ timestate }, function () {});
-        startTimer(newState.timeSpace, display);
-      }
-    }
-  });
-}
-
-function startTimer(_timestate, display) {
-  var remainingTime = _timestate + 1,
-    minutes,
-    seconds;
-
-  var myclock = setInterval(function () {
-    if (--remainingTime >= 0) {
-      minutes = parseInt(remainingTime / 60, 10);
-      seconds = parseInt(remainingTime % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      //render time machine
-      display.textContent = minutes + ":" + seconds;
-      //update time remaining & posponTime
-      timestate.timeSpace = remainingTime;
-      timestate.posponTime = Date.now();
-      chrome.storage.local.set({ timestate }, function () {});
-    } else {
-      alert("Time Out!");
-      timestate.runState = 0;
-      chrome.storage.local.set({ timestate }, function () {});
-      clearInterval(myclock);
-    }
-  }, 1000);
-}
-checking();
