@@ -107,9 +107,10 @@ chrome.storage.local.get(["state"], function (result) {
       }
     }
   }
-  if (result.state.timestate.deadline - Date.now()) isBlockForCountDown = true;
-  if (isBlockForTodo && !isBlockForCountDown)
-    blockForTodo(result.state.listTodo, result.state.setting.tiktok);
+  let a = result.state.timestate.deadline - Date.now();
+
+  if (a >= 0) isBlockForCountDown = true;
+  blockForTodo(result.state.listTodo, result.state.setting.tiktok);
   if (!isBlockForTodo && isBlockForCountDown)
     blockForCountDown(result.state.setting.tiktok);
   if (isBlockForTodo && isBlockForCountDown)
