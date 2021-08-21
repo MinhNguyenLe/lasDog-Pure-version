@@ -67,7 +67,7 @@ function setOldChecked() {
 }
 
 function startTimer(_timestate, display) {
-  var remainingTime = _timestate + 1,
+  var remainingTime = _timestate ,
     minutes,
     seconds;
 
