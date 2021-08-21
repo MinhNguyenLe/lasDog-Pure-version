@@ -342,9 +342,12 @@ second.addEventListener("input", (e) => {
   };
   if(e.target.value.length >= 1){
     document.querySelector("#btn-start").style.color = "#1da1f2";
+    document.querySelector("#btn-start").style.cursor = "pointer";
   }
-  else
+  else{
     document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "default";
+  }
 });
 
 minute.addEventListener("input", (e) => {
@@ -354,7 +357,10 @@ minute.addEventListener("input", (e) => {
   };
   if(e.target.value.length >= 1){
     document.querySelector("#btn-start").style.color = "#1da1f2";
+    document.querySelector("#btn-start").style.cursor = "pointer";
   }
-  else
+  else{
     document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "default";
+  }
 });
