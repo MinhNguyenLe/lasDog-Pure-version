@@ -98,6 +98,7 @@ input {
 }
 .mini-input {
   width: 24px;
+  padding: 2px 10px;
 }
 .around {
   justify-content: space-around;
@@ -108,10 +109,11 @@ input {
 .start-countdown {
   background-color: white;
   width: auto;
-  border: 1px solid #1da1f2;
+  /* border: 1px solid #1da1f2; */
+  border: 1px solid; 
   padding: 6px 10px;
   border-radius: 6px;
-  color: #1da1f2;
+  color: #969696;
 }
 .btn-start-todo {
   background-color: white;

@@ -93,9 +93,10 @@ function startTimer(_timestate, display) {
         "time"
       ).innerHTML = `<span id="time">Time out!</span>`;
       timeOutAudio.play();
-      setTimeout(function (x = "none") {
+      setTimeout(function (x = "none", y = "flex") {
         document.getElementById("count-machine").style.display = x;
-      }, 2000);
+        document.getElementById("time-input").style.display = y;
+      }, 3000);
       setStorage();
       clearInterval(myclock);
     }
@@ -139,6 +140,7 @@ chrome.storage.local.get(["state"], function (result) {
 
     if (newState.runState == 1) {
       document.getElementById("count-machine").style.display = "flex";
+      document.getElementById("time-input").style.display = "none";
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
       newState.timeSpace -= skippedTime;
 
@@ -149,8 +151,9 @@ chrome.storage.local.get(["state"], function (result) {
           "time"
         ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
-        setTimeout(function (x = "none") {
+        setTimeout(function (x = "none", y = "flex") {
           document.getElementById("count-machine").style.display = x;
+          document.getElementById("time-input").style.display = y;
         }, 2000);
       } else {
         //update local timestate
@@ -302,7 +305,7 @@ startCountdown.addEventListener("click", () => {
   //accounting timespace
   state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
   if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
-    alert("please set the input!");
+    // alert("please set the input!");
   } else {
     document.getElementById("count-machine").style.display = "flex";
     if (state.timestate.runState == 0){
@@ -310,11 +313,18 @@ startCountdown.addEventListener("click", () => {
       //update state
       state.timestate.runState = 1;
       setStorage();
-
+      //hide input bar
+      setTimeout(function(){
+        document.querySelector("#btn-start").style.color = "#969696"}, 100);
+      setTimeout(function(i = "time-input"){
+        document.getElementById(i).style.display = "none";
+        // reset input bar
+        document.getElementById("minute").value = null;
+        document.getElementById("second").value = null;
+      }, 1000);
       // start timer
       startTimer(state.timestate.timeSpace, display);
-      document.getElementById("minute").value = null;
-      document.getElementById("second").value = null;
+      
     }
     //prevent nestlest clock
     else if (state.timestate.runState == 1) {
@@ -329,12 +339,22 @@ second.addEventListener("input", (e) => {
   if (e.target.value.length > 2) {
     let a = e.target.value.toString().slice(0, 2);
     e.target.value = parseInt(a);
+  };
+  if(e.target.value.length >= 1){
+    document.querySelector("#btn-start").style.color = "#1da1f2";
   }
+  else
+    document.querySelector("#btn-start").style.color = "#969696";
 });
 
 minute.addEventListener("input", (e) => {
   if (e.target.value.length > 3) {
     let a = e.target.value.toString().slice(0, 3);
     e.target.value = parseInt(a);
+  };
+  if(e.target.value.length >= 1){
+    document.querySelector("#btn-start").style.color = "#1da1f2";
   }
+  else
+    document.querySelector("#btn-start").style.color = "#969696";
 });
