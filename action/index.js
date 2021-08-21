@@ -304,7 +304,8 @@ startCountdown.addEventListener("click", () => {
   chrome.storage.local.set({ deadline }, function () {});
 
   //accounting timespace
-  state.timestate.timeSpace = parseInt((min || 0) * 60 + (sec || 0), 10);
+  state.timestate.timeSpace = parseInt(min || 0) * 60 + (parseInt(sec) || 0);
+
   if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
     // alert("please set the input!");
   } else {
