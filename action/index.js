@@ -316,8 +316,8 @@ startCountdown.addEventListener("click", () => {
       //hide input bar
       setTimeout(function(){
         document.querySelector("#btn-start").style.color = "#969696"}, 0);
-      setTimeout(function(i = "time-input"){
-        document.getElementById(i).style.display = "none";
+      setTimeout(function(){
+        document.getElementById("time-input").style.display = "none";
         // reset input bar
         document.getElementById("minute").value = null;
         document.getElementById("second").value = null;
