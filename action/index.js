@@ -67,7 +67,7 @@ function setOldChecked() {
 }
 
 function startTimer(_timestate, display) {
-  var remainingTime = _timestate + 1,
+  var remainingTime = _timestate,
     minutes,
     seconds;
 
@@ -93,9 +93,9 @@ function startTimer(_timestate, display) {
         "time"
       ).innerHTML = `<span id="time">Time out!</span>`;
       timeOutAudio.play();
-      setTimeout(function (x = "none", y = "flex") {
-        document.getElementById("count-machine").style.display = x;
-        document.getElementById("time-input").style.display = y;
+      setTimeout(function () {
+        document.getElementById("count-machine").style.display = "none";
+        document.getElementById("time-input").style.display = "flex";
       }, 3000);
       setStorage();
       clearInterval(myclock);
@@ -151,9 +151,9 @@ chrome.storage.local.get(["state"], function (result) {
           "time"
         ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
-        setTimeout(function (x = "none", y = "flex") {
-          document.getElementById("count-machine").style.display = x;
-          document.getElementById("time-input").style.display = y;
+        setTimeout(function () {
+          document.getElementById("count-machine").style.display = "none";
+          document.getElementById("time-input").style.display = "flex";
         }, 2000);
       } else {
         //update local timestate
@@ -319,13 +319,13 @@ startCountdown.addEventListener("click", () => {
       //hide input bar
       setTimeout(function () {
         document.querySelector("#btn-start").style.color = "#969696";
-      }, 100);
-      setTimeout(function (i = "time-input") {
-        document.getElementById(i).style.display = "none";
+      }, 0);
+      setTimeout(function () {
+        document.getElementById("time-input").style.display = "none";
         // reset input bar
         document.getElementById("minute").value = null;
         document.getElementById("second").value = null;
-      }, 1000);
+      }, 0);
       // start timer
       startTimer(state.timestate.timeSpace, display);
     }
@@ -343,7 +343,11 @@ second.addEventListener("input", (e) => {
   }
   if (e.target.value.length >= 1) {
     document.querySelector("#btn-start").style.color = "#1da1f2";
-  } else document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "pointer";
+  } else {
+    document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "default";
+  }
 });
 
 minute.addEventListener("input", (e) => {
@@ -353,5 +357,9 @@ minute.addEventListener("input", (e) => {
   }
   if (e.target.value.length >= 1) {
     document.querySelector("#btn-start").style.color = "#1da1f2";
-  } else document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "pointer";
+  } else {
+    document.querySelector("#btn-start").style.color = "#969696";
+    document.querySelector("#btn-start").style.cursor = "default";
+  }
 });

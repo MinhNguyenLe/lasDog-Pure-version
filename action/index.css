@@ -110,7 +110,7 @@ input {
   background-color: white;
   width: auto;
   /* border: 1px solid #1da1f2; */
-  border: 1px solid; 
+  border: 1px solid;
   padding: 6px 10px;
   border-radius: 6px;
   color: #969696;
@@ -186,4 +186,7 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+#btn-start {
+  cursor: default;
 }
