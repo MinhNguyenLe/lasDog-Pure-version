@@ -37,7 +37,6 @@ function blockForTodo(items, settingBlock) {
       count++;
     });
   }
-  document.documentElement.style.display = "block";
 }
 
 function blockBoth(items, settingBlock) {
@@ -73,7 +72,6 @@ function blockBoth(items, settingBlock) {
       count++;
     });
   }
-  document.documentElement.style.display = "block";
 }
 
 function blockForCountDown(settingBlock) {
@@ -89,8 +87,11 @@ function blockForCountDown(settingBlock) {
     const newBody = document.querySelector(".new-body");
     newBody.classList.add(`linear${linearRandom}`);
   }
-  document.documentElement.style.display = "block";
 }
+
+chrome.storage.local.get(["deadline"], function (result) {
+  if (result.deadline - Date.now() >= 0) isBlockForCountDown = true;
+});
 
 chrome.storage.local.get(["state"], function (result) {
   if (!result.state.listTodo.length) {
@@ -108,14 +109,12 @@ chrome.storage.local.get(["state"], function (result) {
     }
   }
 
-  let a = result.state.timestate.deadline - Date.now();
-
-  if (a >= 0) isBlockForCountDown = true;
-
   if (isBlockForTodo && !isBlockForCountDown)
     blockForTodo(result.state.listTodo, result.state.setting.facebook);
   if (!isBlockForTodo && isBlockForCountDown)
     blockForCountDown(result.state.setting.facebook);
   if (isBlockForTodo && isBlockForCountDown)
     blockBoth(result.state.listTodo, result.state.setting.facebook);
+
+  document.documentElement.style.display = "block";
 });
