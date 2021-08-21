@@ -93,9 +93,9 @@ function startTimer(_timestate, display) {
         "time"
       ).innerHTML = `<span id="time">Time out!</span>`;
       timeOutAudio.play();
-      setTimeout(function (x = "none", y = "flex") {
-        document.getElementById("count-machine").style.display = x;
-        document.getElementById("time-input").style.display = y;
+      setTimeout(function () {
+        document.getElementById("count-machine").style.display = "none";
+        document.getElementById("time-input").style.display = "flex";
       }, 3000);
       setStorage();
       clearInterval(myclock);
@@ -151,9 +151,9 @@ chrome.storage.local.get(["state"], function (result) {
           "time"
         ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
-        setTimeout(function (x = "none", y = "flex") {
-          document.getElementById("count-machine").style.display = x;
-          document.getElementById("time-input").style.display = y;
+        setTimeout(function () {
+          document.getElementById("count-machine").style.display = "none";
+          document.getElementById("time-input").style.display = "flex";
         }, 2000);
       } else {
         //update local timestate
@@ -315,13 +315,13 @@ startCountdown.addEventListener("click", () => {
       setStorage();
       //hide input bar
       setTimeout(function(){
-        document.querySelector("#btn-start").style.color = "#969696"}, 100);
+        document.querySelector("#btn-start").style.color = "#969696"}, 0);
       setTimeout(function(i = "time-input"){
         document.getElementById(i).style.display = "none";
         // reset input bar
         document.getElementById("minute").value = null;
         document.getElementById("second").value = null;
-      }, 1000);
+      }, 0);
       // start timer
       startTimer(state.timestate.timeSpace, display);
       
