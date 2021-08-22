@@ -102,6 +102,10 @@ function startTimer(_timestate, display) {
     }
   }, 1000);
 }
+
+function triggerCursor(type) {
+  document.querySelector("#btn-start").style.cursor = type;
+}
 // get data from local storage
 chrome.storage.local.get(["state"], function (result) {
   if (result.state) {
@@ -305,7 +309,7 @@ startCountdown.addEventListener("click", () => {
 
   //accounting timespace
   state.timestate.timeSpace = parseInt(min || 0) * 60 + (parseInt(sec) || 0);
-
+  triggerCursor("default");
   if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
     // alert("please set the input!");
   } else {
@@ -344,10 +348,10 @@ second.addEventListener("input", (e) => {
   }
   if (e.target.value.length >= 1) {
     document.querySelector("#btn-start").style.color = "#1da1f2";
-    document.querySelector("#btn-start").style.cursor = "pointer";
+    triggerCursor("pointer");
   } else {
     document.querySelector("#btn-start").style.color = "#969696";
-    document.querySelector("#btn-start").style.cursor = "default";
+    triggerCursor("default");
   }
 });
 
@@ -358,10 +362,11 @@ minute.addEventListener("input", (e) => {
   }
   if (e.target.value.length >= 1) {
     document.querySelector("#btn-start").style.color = "#1da1f2";
-    document.querySelector("#btn-start").style.cursor = "pointer";
+    triggerCursor("pointer");
   } else {
     document.querySelector("#btn-start").style.color = "#969696";
-    document.querySelector("#btn-start").style.cursor = "default";
+    triggerCursor("default");
+
   }
 });
 
@@ -381,3 +386,4 @@ minute.addEventListener("keydown", function(e) {
     document.getElementById("btn-start").click();
   }
 });
+ 
