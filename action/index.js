@@ -364,3 +364,20 @@ minute.addEventListener("input", (e) => {
     document.querySelector("#btn-start").style.cursor = "default";
   }
 });
+
+second.addEventListener("keydown", function(e) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (e.key === "Enter") {
+    e.preventDefault();                                         
+    // Trigger the button element with a click
+    document.getElementById("btn-start").click();
+  }
+});
+minute.addEventListener("keydown", function(e) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (e.key === "Enter") {
+    e.preventDefault();                                         
+    // Trigger the button element with a click
+    document.getElementById("btn-start").click();
+  }
+});
