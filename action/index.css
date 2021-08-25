@@ -84,6 +84,8 @@ input {
 }
 .todo-label {
   margin-left: 8px;
+  font-size: 14px;
+  color: #464646;
   max-width: 240px;
   cursor: pointer;
 }
