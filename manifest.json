@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Learn deep Extension",
+  "name": "Learn as D.",
   "version": "1.0.0",
-  "description": "the best extension for learning",
+  "description": "increase performance when learning-working",
   "icons": {
     "16": "/images/svg-icon16.png",
     "48": "/images/svg-icon16.png",
