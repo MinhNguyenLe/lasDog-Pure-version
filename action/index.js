@@ -219,7 +219,8 @@ todo.addEventListener("click", () => {
 
 // input todo
 todoInput.addEventListener("keydown", (e) => {
-  if (e.code == "Enter") {
+  console.log(e.target.value, todoInput.value);
+  if (e.code == "Enter" && e.target.value.trim().length) {
     let newTodo = `<div id="${state.countId}" class="list-todo full-width flex row mid">
     <input id="input-${state.countId}" class="input-child" type="checkbox"/>
     <label class="todo-label" for="input-${state.countId}" id="todo-${state.countId}">${todoInput.value}</label>
@@ -310,9 +311,8 @@ startCountdown.addEventListener("click", () => {
   //accounting timespace
   state.timestate.timeSpace = parseInt(min || 0) * 60 + (parseInt(sec) || 0);
   triggerCursor("default");
-  if (state.timestate.timeSpace == 0 && state.timestate.runState == 0) {
-    // alert("please set the input!");
-  } else {
+
+  if (state.timestate.timeSpace != 0 || state.timestate.runState != 0) {
     document.getElementById("count-machine").style.display = "flex";
     if (state.timestate.runState == 0) {
       document.getElementById(
@@ -333,10 +333,6 @@ startCountdown.addEventListener("click", () => {
       }, 0);
       // start timer
       startTimer(state.timestate.timeSpace, display);
-    }
-    //prevent nestlest clock
-    else if (state.timestate.runState == 1) {
-      //
     }
   }
 });
@@ -366,24 +362,20 @@ minute.addEventListener("input", (e) => {
   } else {
     document.querySelector("#btn-start").style.color = "#969696";
     triggerCursor("default");
-
   }
 });
 
-second.addEventListener("keydown", function(e) {
-  // Number 13 is the "Enter" key on the keyboard
+second.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    e.preventDefault();                                         
+    e.preventDefault();
     // Trigger the button element with a click
     document.getElementById("btn-start").click();
   }
 });
-minute.addEventListener("keydown", function(e) {
-  // Number 13 is the "Enter" key on the keyboard
+minute.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    e.preventDefault();                                         
+    e.preventDefault();
     // Trigger the button element with a click
     document.getElementById("btn-start").click();
   }
 });
- 
