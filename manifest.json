@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Learn as D.",
-  "version": "1.0.0",
+  "name": "lasDog",
+  "version": "1.1.0",
   "description": "increase performance when learning-working",
   "icons": {
     "16": "/images/svg-icon16.png",
@@ -24,7 +24,7 @@
   "externally_connectable": {
     "matches": ["https://www.youtube.com/*", "https://www.facebook.com/*"]
   },
-  "permissions": ["storage", "scripting", "tabs"],
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": [
