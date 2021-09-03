@@ -40,6 +40,15 @@ const iconCD = document.getElementById("icon-countdown");
 
 const second = document.getElementById("second");
 const minute = document.getElementById("minute");
+const timeCD = document.getElementById("time");
+
+const countMachine = document.getElementById("count-machine");
+const timeInput = document.getElementById("time-input");
+const btnStart = document.querySelector("#btn-start");
+
+const tabTodo = document.getElementById("tab-todo");
+const tabSetting = document.getElementById("tab-setting");
+const tabCountdown = document.getElementById("tab-countdown");
 // list function
 function setStyleElement(element, type, style) {
   element.style[type] = style;
@@ -94,14 +103,14 @@ function startTimer(_timestate, display) {
       setStorage();
     } else {
       state.timestate.runState = 0;
-      document.getElementById(
-        "time"
-      ).innerHTML = `<span id="time">Time out!</span>`;
+      timeCD.innerHTML = `<span id="time">Time out!</span>`;
       timeOutAudio.play();
+
       setTimeout(function () {
-        document.getElementById("count-machine").style.display = "none";
-        document.getElementById("time-input").style.display = "flex";
+        setStyleElement(countMachine, "display", "none");
+        setStyleElement(timeInput, "display", "flex");
       }, 3000);
+
       setStorage();
       clearInterval(myclock);
     }
@@ -109,18 +118,14 @@ function startTimer(_timestate, display) {
 }
 
 function triggerCursor(type) {
-  setStyleElement(document.querySelector("#btn-start"), "cursor", type);
+  setStyleElement(btnStart, "cursor", type);
 }
 
 function changeTab(tab, element, icon) {
   return tab.addEventListener("click", () => {
-    setStyleElement(document.getElementById("tab-todo"), "display", "none");
-    setStyleElement(document.getElementById("tab-setting"), "display", "none");
-    setStyleElement(
-      document.getElementById("tab-countdown"),
-      "display",
-      "none"
-    );
+    setStyleElement(tabTodo, "display", "none");
+    setStyleElement(tabSetting, "display", "none");
+    setStyleElement(tabCountdown, "display", "none");
     setStyleElement(document.getElementById(element), "display", "flex");
 
     todo.classList.remove("action");
@@ -154,10 +159,10 @@ function inputCountdown(name, len) {
       e.target.value = parseInt(a);
     }
     if (e.target.value.length >= 1) {
-      setStyleElement(document.querySelector("#btn-start"), "color", "#1da1f2");
+      setStyleElement(btnStart, "color", "#1da1f2");
       triggerCursor("pointer");
     } else {
-      setStyleElement(document.querySelector("#btn-start"), "color", "#969696");
+      setStyleElement(btnStart, "color", "#969696");
       triggerCursor("default");
     }
   });
@@ -212,12 +217,8 @@ chrome.storage.local.get(["state"], function (result) {
     let newState = result.state.timestate;
 
     if (newState.runState == 1) {
-      setStyleElement(
-        document.getElementById("count-machine"),
-        "display",
-        "flex"
-      );
-      setStyleElement(document.getElementById("time-input"), "display", "none");
+      setStyleElement(countMachine, "display", "flex");
+      setStyleElement(timeInput, "display", "none");
       skippedTime = Math.floor((Date.now() - newState.posponTime) / 1000);
       newState.timeSpace -= skippedTime;
 
@@ -229,16 +230,8 @@ chrome.storage.local.get(["state"], function (result) {
         ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
         setTimeout(function () {
-          setStyleElement(
-            document.getElementById("count-machine"),
-            "display",
-            "none"
-          );
-          setStyleElement(
-            document.getElementById("time-input"),
-            "display",
-            "flex"
-          );
+          setStyleElement(countMachine, "display", "none");
+          setStyleElement(timeInput, "display", "flex");
         }, 2000);
       } else {
         //update local timestate
@@ -308,21 +301,15 @@ startCountdown.addEventListener("click", () => {
   triggerCursor("default");
 
   if (state.timestate.timeSpace != 0 || state.timestate.runState != 0) {
-    setStyleElement(
-      document.getElementById("count-machine"),
-      "display",
-      "flex"
-    );
+    setStyleElement(countMachine, "display", "flex");
     if (state.timestate.runState == 0) {
-      document.getElementById(
-        "time"
-      ).innerHTML = `<span id="time">start!</span>`;
+      timeCD.innerHTML = `<span id="time">start!</span>`;
       //update state
       state.timestate.runState = 1;
       setStorage();
 
-      setStyleElement(document.querySelector("#btn-start"), "color", "#969696");
-      setStyleElement(document.getElementById("time-input"), "display", "none");
+      setStyleElement(btnStart, "color", "#969696");
+      setStyleElement(timeInput, "display", "none");
 
       resetValueInput(minute, null);
       resetValueInput(second, null);
