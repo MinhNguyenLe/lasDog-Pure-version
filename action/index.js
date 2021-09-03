@@ -41,6 +41,10 @@ const iconCD = document.getElementById("icon-countdown");
 const second = document.getElementById("second");
 const minute = document.getElementById("minute");
 // list function
+function setStyleElement(element, type, style) {
+  element.style[type] = style;
+}
+
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
@@ -105,16 +109,19 @@ function startTimer(_timestate, display) {
 }
 
 function triggerCursor(type) {
-  document.querySelector("#btn-start").style.cursor = type;
+  setStyleElement(document.querySelector("#btn-start"), "cursor", type);
 }
 
 function changeTab(tab, element, icon) {
   return tab.addEventListener("click", () => {
-    // change interface
-    document.getElementById("tab-todo").style.display = "none";
-    document.getElementById("tab-setting").style.display = "none";
-    document.getElementById("tab-countdown").style.display = "none";
-    document.getElementById(element).style.display = "flex";
+    setStyleElement(document.getElementById("tab-todo"), "display", "none");
+    setStyleElement(document.getElementById("tab-setting"), "display", "none");
+    setStyleElement(
+      document.getElementById("tab-countdown"),
+      "display",
+      "none"
+    );
+    setStyleElement(document.getElementById(element), "display", "flex");
 
     todo.classList.remove("action");
     setting.classList.remove("action");
@@ -147,10 +154,10 @@ function inputCountdown(name, len) {
       e.target.value = parseInt(a);
     }
     if (e.target.value.length >= 1) {
-      document.querySelector("#btn-start").style.color = "#1da1f2";
+      setStyleElement(document.querySelector("#btn-start"), "color", "#1da1f2");
       triggerCursor("pointer");
     } else {
-      document.querySelector("#btn-start").style.color = "#969696";
+      setStyleElement(document.querySelector("#btn-start"), "color", "#969696");
       triggerCursor("default");
     }
   });
@@ -167,10 +174,6 @@ function enterCountdown(name) {
 
 function resetValueInput(name, defaultType) {
   name.value = defaultType;
-}
-
-function setStyleElement(element, type, style) {
-  element.style[type] = style;
 }
 // get data from local storage
 chrome.storage.local.get(["state"], function (result) {
