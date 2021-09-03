@@ -65,6 +65,7 @@ function removeClass(element, className) {
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
+
 function removeItem(t) {
   t.remove();
   state.listTodo = state.listTodo.filter((list) => list.id != t.id);
@@ -125,15 +126,12 @@ function startTimer(_timestate, display) {
   }, 1000);
 }
 
-function triggerCursor(type) {
-  setStyleElement(btnStart, "cursor", type);
-}
-
 function changeTab(tab, element, icon) {
   return tab.addEventListener("click", () => {
     setStyleElement(tabTodo, "display", "none");
     setStyleElement(tabSetting, "display", "none");
     setStyleElement(tabCountdown, "display", "none");
+
     setStyleElement(document.getElementById(element), "display", "flex");
 
     removeClass(todo, "action");
@@ -170,10 +168,10 @@ function inputCountdown(name, len) {
     }
     if (e.target.value.length >= 1) {
       setStyleElement(btnStart, "color", "#1da1f2");
-      triggerCursor("pointer");
+      setStyleElement(btnStart, "cursor", "pointer");
     } else {
       setStyleElement(btnStart, "color", "#969696");
-      triggerCursor("default");
+      setStyleElement(btnStart, "cursor", "default");
     }
   });
 }
@@ -309,7 +307,7 @@ startCountdown.addEventListener("click", () => {
 
   //accounting timespace
   state.timestate.timeSpace = parseInt(min || 0) * 60 + (parseInt(sec) || 0);
-  triggerCursor("default");
+  setStyleElement(btnStart, "cursor", "default");
 
   if (state.timestate.timeSpace != 0 || state.timestate.runState != 0) {
     setStyleElement(countMachine, "display", "flex");
