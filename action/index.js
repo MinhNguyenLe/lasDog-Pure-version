@@ -24,6 +24,7 @@ const todoInput = document.getElementById("todo");
 const setting = document.querySelector(".btn-setting");
 const list = document.getElementById("list");
 const todo = document.querySelector(".btn-todo");
+
 const startCountdown = document.querySelector(".start-countdown");
 const display = document.querySelector("#time");
 const timeOutAudio = document.getElementById("myAudio");
@@ -67,11 +68,11 @@ function setOldChecked() {
 }
 
 function startTimer(_timestate, display) {
-  var remainingTime = _timestate,
+  let remainingTime = _timestate,
     minutes,
     seconds;
 
-  var myclock = setInterval(function () {
+  let myclock = setInterval(function () {
     if (--remainingTime >= 0) {
       minutes = parseInt(remainingTime / 60, 10);
       seconds = parseInt(remainingTime % 60, 10);
@@ -105,6 +106,63 @@ function startTimer(_timestate, display) {
 
 function triggerCursor(type) {
   document.querySelector("#btn-start").style.cursor = type;
+}
+
+function changeTab(tab, element, icon) {
+  return tab.addEventListener("click", () => {
+    // change interface
+    document.getElementById("tab-todo").style.display = "none";
+    document.getElementById("tab-setting").style.display = "none";
+    document.getElementById("tab-countdown").style.display = "none";
+    document.getElementById(element).style.display = "flex";
+
+    todo.classList.remove("action");
+    setting.classList.remove("action");
+    countdown.classList.remove("action");
+    tab.classList.add("action");
+
+    iconCD.classList.remove("icon-action");
+    iconTD.classList.remove("icon-action");
+    iconST.classList.remove("icon-action");
+    icon.classList.add("icon-action");
+  });
+}
+
+function appBlocked(blocked, app) {
+  return blocked.addEventListener("click", () => {
+    state.setting[app] = !state.setting[app];
+    if (state.setting[app]) {
+      blocked.classList.add(app);
+    } else {
+      blocked.classList.remove(app);
+    }
+    setStorage();
+  });
+}
+
+function inputCountdown(name, len) {
+  return name.addEventListener("input", (e) => {
+    if (e.target.value.length > len) {
+      let a = e.target.value.toString().slice(0, len);
+      e.target.value = parseInt(a);
+    }
+    if (e.target.value.length >= 1) {
+      document.querySelector("#btn-start").style.color = "#1da1f2";
+      triggerCursor("pointer");
+    } else {
+      document.querySelector("#btn-start").style.color = "#969696";
+      triggerCursor("default");
+    }
+  });
+}
+
+function enterCountdown(name) {
+  return name.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.getElementById("btn-start").click();
+    }
+  });
 }
 // get data from local storage
 chrome.storage.local.get(["state"], function (result) {
@@ -169,57 +227,12 @@ chrome.storage.local.get(["state"], function (result) {
   }
 });
 
-// click countdown tab
-countdown.addEventListener("click", () => {
-  // change interface
-  document.getElementById("tab-todo").style.display = "none";
-  document.getElementById("tab-setting").style.display = "none";
-  document.getElementById("tab-countdown").style.display = "flex";
-
-  todo.classList.remove("action");
-  setting.classList.remove("action");
-  countdown.classList.add("action");
-
-  iconCD.classList.add("icon-action");
-  iconTD.classList.remove("icon-action");
-  iconST.classList.remove("icon-action");
-});
-
-// click setting tab
-setting.addEventListener("click", () => {
-  // change interface
-  document.getElementById("tab-todo").style.display = "none";
-  document.getElementById("tab-setting").style.display = "flex";
-  document.getElementById("tab-countdown").style.display = "none";
-
-  todo.classList.remove("action");
-  countdown.classList.remove("action");
-  setting.classList.add("action");
-
-  iconTD.classList.remove("icon-action");
-  iconCD.classList.remove("icon-action");
-  iconST.classList.add("icon-action");
-});
-
-// click todo tab
-todo.addEventListener("click", () => {
-  // change interface
-  document.getElementById("tab-todo").style.display = "flex";
-  document.getElementById("tab-setting").style.display = "none";
-  document.getElementById("tab-countdown").style.display = "none";
-
-  countdown.classList.remove("action");
-  setting.classList.remove("action");
-  todo.classList.add("action");
-
-  iconCD.classList.remove("icon-action");
-  iconTD.classList.add("icon-action");
-  iconST.classList.remove("icon-action");
-});
+changeTab(countdown, "tab-countdown", iconCD);
+changeTab(setting, "tab-setting", iconST);
+changeTab(todo, "tab-todo", iconTD);
 
 // input todo
 todoInput.addEventListener("keydown", (e) => {
-  console.log(e.target.value, todoInput.value);
   if (e.code == "Enter" && e.target.value.trim().length) {
     let newTodo = `<div id="${state.countId}" class="list-todo full-width flex row mid">
     <input id="input-${state.countId}" class="input-child" type="checkbox"/>
@@ -256,49 +269,10 @@ todoInput.addEventListener("keydown", (e) => {
   }
 });
 
-// setting block fb
-blockFB.addEventListener("click", () => {
-  state.setting.facebook = !state.setting.facebook;
-  if (state.setting.facebook) {
-    blockFB.classList.add("facebook");
-  } else {
-    blockFB.classList.remove("facebook");
-  }
-  setStorage();
-});
-
-// setting block tiktok
-blockTT.addEventListener("click", () => {
-  state.setting.tiktok = !state.setting.tiktok;
-  if (state.setting.tiktok) {
-    blockTT.classList.add("tiktok");
-  } else {
-    blockTT.classList.remove("tiktok");
-  }
-  setStorage();
-});
-
-// setting block youtube
-blockYT.addEventListener("click", () => {
-  state.setting.youtube = !state.setting.youtube;
-  if (state.setting.youtube) {
-    blockYT.classList.add("youtube");
-  } else {
-    blockYT.classList.remove("youtube");
-  }
-  setStorage();
-});
-
-// setting block intagram
-blockIN.addEventListener("click", () => {
-  state.setting.instagram = !state.setting.instagram;
-  if (state.setting.instagram) {
-    blockIN.classList.add("instagram");
-  } else {
-    blockIN.classList.remove("instagram");
-  }
-  setStorage();
-});
+appBlocked(blockFB, "facebook");
+appBlocked(blockTT, "tiktok");
+appBlocked(blockYT, "youtube");
+appBlocked(blockIN, "instagram");
 
 startCountdown.addEventListener("click", () => {
   //checking input
@@ -337,45 +311,8 @@ startCountdown.addEventListener("click", () => {
   }
 });
 
-second.addEventListener("input", (e) => {
-  if (e.target.value.length > 2) {
-    let a = e.target.value.toString().slice(0, 2);
-    e.target.value = parseInt(a);
-  }
-  if (e.target.value.length >= 1) {
-    document.querySelector("#btn-start").style.color = "#1da1f2";
-    triggerCursor("pointer");
-  } else {
-    document.querySelector("#btn-start").style.color = "#969696";
-    triggerCursor("default");
-  }
-});
+inputCountdown(second, 2);
+inputCountdown(minute, 3);
 
-minute.addEventListener("input", (e) => {
-  if (e.target.value.length > 3) {
-    let a = e.target.value.toString().slice(0, 3);
-    e.target.value = parseInt(a);
-  }
-  if (e.target.value.length >= 1) {
-    document.querySelector("#btn-start").style.color = "#1da1f2";
-    triggerCursor("pointer");
-  } else {
-    document.querySelector("#btn-start").style.color = "#969696";
-    triggerCursor("default");
-  }
-});
-
-second.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById("btn-start").click();
-  }
-});
-minute.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById("btn-start").click();
-  }
-});
+enterCountdown(second);
+enterCountdown(minute);
