@@ -54,6 +54,14 @@ function setStyleElement(element, type, style) {
   element.style[type] = style;
 }
 
+function addClass(element, className) {
+  element.classList.add(className);
+}
+
+function removeClass(element, className) {
+  element.classList.remove(className);
+}
+
 function setStorage() {
   chrome.storage.local.set({ state }, function () {});
 }
@@ -128,15 +136,17 @@ function changeTab(tab, element, icon) {
     setStyleElement(tabCountdown, "display", "none");
     setStyleElement(document.getElementById(element), "display", "flex");
 
-    todo.classList.remove("action");
-    setting.classList.remove("action");
-    countdown.classList.remove("action");
-    tab.classList.add("action");
+    removeClass(todo, "action");
+    removeClass(setting, "action");
+    removeClass(countdown, "action");
 
-    iconCD.classList.remove("icon-action");
-    iconTD.classList.remove("icon-action");
-    iconST.classList.remove("icon-action");
-    icon.classList.add("icon-action");
+    addClass(tab, "action");
+
+    removeClass(iconCD, "icon-action");
+    removeClass(iconTD, "icon-action");
+    removeClass(iconST, "icon-action");
+
+    addClass(icon, "icon-action");
   });
 }
 
@@ -144,9 +154,9 @@ function appBlocked(blocked, app) {
   return blocked.addEventListener("click", () => {
     state.setting[app] = !state.setting[app];
     if (state.setting[app]) {
-      blocked.classList.add(app);
+      addClass(blocked, app);
     } else {
-      blocked.classList.remove(app);
+      removeClass(blocked, app);
     }
     setStorage();
   });
@@ -195,10 +205,10 @@ chrome.storage.local.get(["state"], function (result) {
     }
     // set value setting
     state.setting = result.state.setting;
-    if (result.state.setting.facebook) blockFB.classList.add("facebook");
-    if (result.state.setting.tiktok) blockTT.classList.add("tiktok");
-    if (result.state.setting.youtube) blockYT.classList.add("youtube");
-    if (result.state.setting.instagram) blockIN.classList.add("instagram");
+    if (result.state.setting.facebook) addClass(blockFB, "facebook");
+    if (result.state.setting.tiktok) addClass(blockTT, "tiktok");
+    if (result.state.setting.youtube) addClass(blockYT, "youtube");
+    if (result.state.setting.instagram) addClass(blockIN, "instagram");
 
     // set begin id value
     if (result.state.countId) state.countId = result.state.countId;
@@ -229,6 +239,7 @@ chrome.storage.local.get(["state"], function (result) {
           "time"
         ).innerHTML = `<span id="time">Time out!</span>`;
         timeOutAudio.play();
+
         setTimeout(function () {
           setStyleElement(countMachine, "display", "none");
           setStyleElement(timeInput, "display", "flex");
